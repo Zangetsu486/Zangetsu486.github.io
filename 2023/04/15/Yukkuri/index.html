@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="Luo&#39;s Blog">
 <meta property="og:description" content="前段时间系统的学习了一下格式化字符串漏洞与利用，正好年初的hgame里有这么一道专门利用这个漏洞的题，于是写篇博客，记录一下这个漏洞的学习心得。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/Yukkuri/image-20230415163817705.png">
-<meta property="og:image" content="http://example.com/Yukkuri/image-20230415164155210.png">
-<meta property="og:image" content="http://example.com/Yukkuri/image-20230415164220359.png">
-<meta property="og:image" content="http://example.com/Yukkuri/image-20230415170109602.png">
-<meta property="og:image" content="http://example.com/Yukkuri/image-20230415172756484.png">
+<meta property="og:image" content="http://example.com/2023/04/15/Yukkuri/image-20230415163817705.png">
+<meta property="og:image" content="http://example.com/2023/04/15/Yukkuri/image-20230415164155210.png">
+<meta property="og:image" content="http://example.com/2023/04/15/Yukkuri/image-20230415164220359.png">
+<meta property="og:image" content="http://example.com/2023/04/15/Yukkuri/image-20230415170109602.png">
+<meta property="og:image" content="http://example.com/2023/04/15/Yukkuri/image-20230415172756484.png">
 <meta property="article:published_time" content="2023-04-15T08:00:50.000Z">
 <meta property="article:modified_time" content="2023-04-15T09:34:15.199Z">
 <meta property="article:author" content="Luo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Yukkuri/image-20230415163817705.png">
+<meta name="twitter:image" content="http://example.com/2023/04/15/Yukkuri/image-20230415163817705.png">
 
 <link rel="canonical" href="http://example.com/2023/04/15/Yukkuri/">
 
@@ -222,11 +222,14 @@
         <p>前段时间系统的学习了一下格式化字符串漏洞与利用，正好年初的hgame里有这么一道专门利用这个漏洞的题，于是写篇博客，记录一下这个漏洞的学习心得。</p>
 <span id="more"></span>
 
-<h2 id="Yukkurisay"><a href="#Yukkurisay" class="headerlink" title="Yukkurisay"></a>Yukkurisay</h2><h3 id="检查保护-分析"><a href="#检查保护-分析" class="headerlink" title="检查保护+分析"></a>检查保护+分析</h3><p><img src="/Yukkuri/image-20230415163817705.png" alt="image-20230415163817705"></p>
+<h2 id="Yukkurisay"><a href="#Yukkurisay" class="headerlink" title="Yukkurisay"></a>Yukkurisay</h2><h3 id="检查保护-分析"><a href="#检查保护-分析" class="headerlink" title="检查保护+分析"></a>检查保护+分析</h3><img src="/2023/04/15/Yukkuri/image-20230415163817705.png" class="" title="image-20230415163817705">
+
 <p>首先检查保护，看到开了canary和NX。</p>
 <p>然后进ida，源码：</p>
-<p><img src="/Yukkuri/image-20230415164155210.png" alt="image-20230415164155210"></p>
-<p><img src="/Yukkuri/image-20230415164220359.png" alt="image-20230415164220359"></p>
+<img src="/2023/04/15/Yukkuri/image-20230415164155210.png" class="" title="image-20230415164155210">
+
+<img src="/2023/04/15/Yukkuri/image-20230415164220359.png" class="" title="image-20230415164220359">
+
 <p>首先是输入一串东西，然后用print_str函数打印了一个yukkuri和输入的这个buf，此时的buf在栈上。</p>
 <p>在退出yukkuri这个系统之后找到了可以利用的格式化字符串，但是<strong>这个str在bss段（非栈上）</strong></p>
 <p>然后我的第一个想法来了，先用上面的buf布栈，再用下面的str查看是第几个参数，发现是第8个（这个过程我就不放图了）</p>
@@ -236,7 +239,8 @@
 <li>泄露到libc版本的同时也要将栈地址泄露出来，因为后续格式化字符串写完地址之后要返回到下面的gift处，所以格式化字符串也要顺路修改返回地址</li>
 <li>然后就是布栈等等过程，先一步步来</li>
 </ul>
-<h3 id="EXPloit"><a href="#EXPloit" class="headerlink" title="EXPloit"></a>EXPloit</h3><p><img src="/Yukkuri/image-20230415170109602.png" alt="image-20230415170109602"></p>
+<h3 id="EXPloit"><a href="#EXPloit" class="headerlink" title="EXPloit"></a>EXPloit</h3><img src="/2023/04/15/Yukkuri/image-20230415170109602.png" class="" title="image-20230415170109602">
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">payload1=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x97</span>+<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x01</span></span><br><span class="line">r.sendafter(<span class="string">&#x27;What would you like to let Yukkri say?&#x27;</span>,payload1)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">IOstderr_libc=u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&quot;\x00&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(IOstderr_libc))</span><br></pre></td></tr></table></figure>
 
 <p>看图可以找到脏数据的地址并泄露，栈地址也在图中可以找到，同理我就不放泄露栈的代码了</p>
@@ -262,7 +266,8 @@
 <p>首先退出循环，用与运算将各字节数据拿出来，然后用str字符串往栈里写。</p>
 <p>为什么要减去，因为每次格式化字符串写的时候是包括前面的，而且我们也只有一次机会去写入。</p>
 <p>贴个效果图：</p>
-<p><img src="/Yukkuri/image-20230415172756484.png" alt="image-20230415172756484"></p>
+<img src="/2023/04/15/Yukkuri/image-20230415172756484.png" class="" title="image-20230415172756484">
+
 <p>左边system和右边对照，改成，本地打通。</p>
 <p>这里我时不时会遇到没改对也能打通的情况，好像原因是因为我断点打的有点问题？</p>
 <p>总之思路是这样没什么问题，下面放一个完整的exp：</p>
