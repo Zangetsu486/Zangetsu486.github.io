@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>CHIP-8</title>
+    <link href="/2023/10/18/CHIP-8/"/>
+    <url>/2023/10/18/CHIP-8/</url>
+    
+    <content type="html"><![CDATA[<p>这种VMpwn对带🔥来说刚刚好, 而对我这个♿就有丶超前🌶️😭</p><span id="more"></span><h2 id="0x01-分析">0x01 分析</h2><p>拿来之后发现clone了一个仓库, 大致一看, 应该像是一个chip8语言的模拟器, 似乎也可以说是一个虚拟机.</p><p>CHIP-8, 小查了一下:</p><p><img src="image-20231018212805437.png" alt="image-20231018212805437"></p><blockquote><p><s>这个人的英语目前像屎所以还是要靠谷歌翻译x  x</s></p></blockquote><p>给了一个patch, patch好之后可以编译运行了.</p><p>这个patch分析一下, 最主要的功能应该就是<code>把flag扔进去</code>, 告诉你flag在这里了.</p><p>其次下面看着是调试性的语句也给加了点注释, 还有main函数里关闭缓冲的初始化性质语句.</p><p><strong>patch里面有关flag的部分是在Machine类里面, 可以看一下这个类</strong></p><h3 id="111">111</h3><p>23.10.18 有事 不写了 明天肯定写完()</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>PWn</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Evolution.</title>
     <link href="/2023/10/18/Evolution/"/>
     <url>/2023/10/18/Evolution/</url>
