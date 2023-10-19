@@ -18,14 +18,14 @@
   
     <meta name="description" content="这种VMpwn对带🔥来说刚刚好, 而对我这个♿就有丶超前🌶️😭">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CHIP-8">
+<meta property="og:title" content="PWNmeCTF CHIP-8 复现">
 <meta property="og:url" content="http://example.com/2023/10/18/CHIP-8/index.html">
 <meta property="og:site_name" content="Luo&#39;s B1oG">
 <meta property="og:description" content="这种VMpwn对带🔥来说刚刚好, 而对我这个♿就有丶超前🌶️😭">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/pics/chip8.png">
 <meta property="article:published_time" content="2023-10-18T12:13:29.000Z">
-<meta property="article:modified_time" content="2023-10-18T13:50:19.501Z">
+<meta property="article:modified_time" content="2023-10-19T15:11:45.288Z">
 <meta property="article:author" content="Luo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/pics/chip8.png">
@@ -34,7 +34,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>CHIP-8 - Luo&#39;s B1oG</title>
+  <title>PWNmeCTF CHIP-8 复现 - Luo&#39;s B1oG</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CHIP-8"></span>
+            <span id="subtitle" data-typed-text="PWNmeCTF CHIP-8 复现"></span>
           
         </div>
 
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          300 words
+          4.2k words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          3 mins
+          35 mins
         
       </span>
     
@@ -271,26 +271,97 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">CHIP-8</h1>
+            <h1 id="seo-header">PWNmeCTF CHIP-8 复现</h1>
             
             
               <div class="markdown-body">
                 
                 <p>这种VMpwn对带🔥来说刚刚好, 而对我这个♿就有丶超前🌶️😭</p>
 <span id="more"></span>
+<h2 id="0x00-材料">0x00 材料</h2>
+<p>一个叫PWNME的比赛的一道题, 链接在这, 以下是照着wp算是复现的过程, 总之是看的想死😭</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ret2school/ctf/tree/master/2023/pwnme/pwn/chip8">CHIP-8github原网址</a></p>
 <h2 id="0x01-分析">0x01 分析</h2>
-<p>拿来之后发现clone了一个仓库, 大致一看, 应该像是一个chip8语言的模拟器, 似乎也可以说是一个虚拟机.</p>
+<p>拿来之后发现clone了一个仓库, 大致一看, 应该像是一个chip8语言的模拟器, 似乎也可以说是一个vm.</p>
 <p>CHIP-8, 小查了一下:</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CHIP-8">https://en.wikipedia.org/wiki/CHIP-8</a></p>
 <p><img src="image-20231018212805437.png" srcset="/img/loading.gif" lazyload alt="image-20231018212805437"></p>
 <blockquote>
 <p><s>这个人的英语目前像屎所以还是要靠谷歌翻译x  x</s></p>
 </blockquote>
-<p>给了一个patch, patch好之后可以编译运行了.</p>
-<p>这个patch分析一下, 最主要的功能应该就是<code>把flag扔进去</code>, 告诉你flag在这里了.</p>
+<p>给了一个patch, 这个patch分析一下, 最主要的功能感觉应该就是<code>把flag扔进去</code>, 告诉你flag在这里了.</p>
 <p>其次下面看着是调试性的语句也给加了点注释, 还有main函数里关闭缓冲的初始化性质语句.</p>
-<p><strong>patch里面有关flag的部分是在Machine类里面, 可以看一下这个类</strong></p>
-<h3 id="111">111</h3>
-<p>23.10.18 有事 不写了 明天肯定写完()</p>
+<p><strong>patch里面有关flag的部分是在Machine类里面, 看一下这个类</strong>:</p>
+<ul>
+<li>
+<p>在<code>Machine.hpp</code>中, 定义了一堆莫名其妙的东西, 但是可以看懂有<code>register</code>, <code>stack</code>, <code>memory</code>这种很熟悉的字样, 具体联系这个维基百科稍微看看:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Machine</span>&#123;<br><span class="hljs-keyword">private</span>:<br>	std::vector&lt;<span class="hljs-type">uint8_t</span>&gt; registers; <span class="hljs-comment">// V0-VF</span><br>	std::vector&lt;<span class="hljs-type">uint8_t</span>&gt; memory; <span class="hljs-comment">// Memory</span><br>	std::vector&lt;<span class="hljs-type">uint8_t</span>&gt; flag;<br>	<span class="hljs-type">uint16_t</span> I; <span class="hljs-comment">// Index register</span><br>	std::vector&lt;<span class="hljs-type">uint16_t</span>&gt; stack; <span class="hljs-comment">// Stack</span><br>	<span class="hljs-type">uint8_t</span> SP; <span class="hljs-comment">// Stack Pointer</span><br>	<span class="hljs-type">uint8_t</span> DT; <span class="hljs-comment">// Delay Timer</span><br>	<span class="hljs-type">uint8_t</span> ST; <span class="hljs-comment">// Sound Timer</span><br>	GraphicEngine ge; <span class="hljs-comment">// Holds Graphics and frame buffer</span><br>	Keyboard kb; <span class="hljs-comment">// presents Keyboard related functions</span><br>	<span class="hljs-type">uint16_t</span> PC; <span class="hljs-comment">// Program Counter</span><br>	std::chrono::steady_clock::time_point last_tick;<br>	<br>	<span class="hljs-comment">// Methods</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(<span class="hljs-type">uint16_t</span>&amp; opcode)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">uint8_t</span> <span class="hljs-title">random_byte</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_machine_state</span><span class="hljs-params">()</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">update_timers</span><span class="hljs-params">(<span class="hljs-type">const</span> std::chrono::steady_clock::time_point&amp; now)</span></span>;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Machine</span>();<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setInst</span><span class="hljs-params">(std::vector&lt;<span class="hljs-type">uint8_t</span>&gt;&amp; prog, <span class="hljs-type">uint16_t</span> start_addr)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">runLoop</span><span class="hljs-params">()</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="image-20231019180155003.png" srcset="/img/loading.gif" lazyload alt="image-20231019180155003"></p>
+</li>
+</ul>
+<p>对比看一下可以大致明白是个什么东西了, 感觉里面这个I应该是比较重要的东西之一</p>
+<ul>
+<li>
+<p>然后是<code>Machine.cpp</code>,</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Machine::<span class="hljs-built_in">Machine</span>()&#123;<br>	registers = std::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">uint8_t</span>&gt;(<span class="hljs-number">16</span>, <span class="hljs-number">0</span>);<br>	stack = std::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">uint16_t</span>&gt;(<span class="hljs-number">32</span>, <span class="hljs-number">0</span>);<br>	memory = std::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">uint8_t</span>&gt;(<span class="hljs-number">4096</span>, <span class="hljs-number">0</span>);<br>	flag = std::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">uint8_t</span>&gt;(<span class="hljs-number">128</span>, <span class="hljs-number">0</span>);<br>	PC = <span class="hljs-number">0x200</span>;<br>	last_tick = std::chrono::steady_clock::<span class="hljs-built_in">now</span>();<br>	I = <span class="hljs-number">0</span>;<br>	SP = <span class="hljs-number">0</span>;<br>	DT = <span class="hljs-number">0</span>;<br>	ST = <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个应该是Machine的构造函数, 16个寄存器, 大小为32的栈和4096(0x1000)的内存, PC可以从上面知道是程序的计数器, 所以似乎是从0x200开始的.</p>
+<p>内存过后直接是flag, 所以可能思路就是越界到flag</p>
+<h2 id="0x02-过程-利用">0x02 过程+利用</h2>
+<p>刚才把他到底是什么东西分析了个大概, 现在开始看怎么跑, 跑什么东西</p>
+<p>给的dockerfile里面跑的是wrapper, wrapper实际跑一下, 感觉实际作用就是传入一个ROM code.</p>
+<p>这个rom应该和 ↓应该是同一套的东西</p>
+<p><img src="image-20231019190936098.png" srcset="/img/loading.gif" lazyload alt="image-20231019190936098"></p>
+<p>给了wrapper.c, 大概看了一下发现确实是这样的, 这个rom code会传进这一套文件里.</p>
+<blockquote>
+<p>在这里传进的ROMcode再分析一下会发现实际上应该也就是后续的opcode?但是不管怎样, 这里是唯一的输入了</p>
+<p><strong>opcode</strong>应该算是控制vm的一些代码了, 这个题由于有着chip-8的背景, opcode可以说完全透明.</p>
+</blockquote>
+<p>漏洞和利用的话, 似乎这个题的漏洞相对来说属于很简单的, 根据分析可以知道flag就在内存块的后面, 所以应该是一个越界的漏洞, 但是实际上跑了一下, 发现除了一块黑框, 完全没有什么输出.</p>
+<blockquote>
+<p>之前没patch瞎鼓捣的时候发现会有一些信息出来, 但是patch过后如上面所说, 调试信息是关闭的, 打不出来东西, 起初我以为是我的步骤哪里出问题以至于把这玩意玩坏了,后来发现并不是这样.</p>
+</blockquote>
+<p>但是翻一下opcode表会发现有一个很奇怪的东西:</p>
+<p><img src="image-20231019203235549.png" srcset="/img/loading.gif" lazyload alt="image-20231019203235549"></p>
+<p>于是这个题的flag的输出方式疑似是很匪夷所思的用这个黑框画出来, 这条opcode是从I开始读, 所以我们只需要让I等于我们的flag地址即可, flag地址是0x1010.</p>
+<p>主要可以利用以下几个命令:</p>
+<p><img src="image-20231019222825584.png" srcset="/img/loading.gif" lazyload alt="image-20231019222825584"></p>
+<p><img src="image-20231019222858938.png" srcset="/img/loading.gif" lazyload alt="image-20231019222858938"></p>
+<p><img src="image-20231019223158918.png" srcset="/img/loading.gif" lazyload alt="image-20231019223158918"></p>
+<p>这个地方直接拿百科上查到的了, 和在.cpp文件里看到的opcode几乎没有任何差别,</p>
+<blockquote>
+<p>然后找到一篇文章, <a target="_blank" rel="noopener" href="https://ctftime.org/writeup/37026">CTFtime.org / PwnMe Qualifications : “8 bits” / chip8 / Writeup</a> , 疑似是官方的wp?</p>
+<p>应该是个很不错的解释:</p>
+</blockquote>
+<ul>
+<li>
+<p>Here are the instruction we need:</p>
+<ul>
+<li><code>Annn</code> - <code>LD I, addr</code>. Set I = nnn. The value of register I is set to nnn.</li>
+<li><code>6xkk</code> - <code>LD Vx, byte</code>, Set Vx = kk. The interpreter puts the value kk into register Vx.</li>
+<li><code>Fx1E</code> - <code>ADD I, Vx</code>. Set I = I + Vx. The values of I and Vx are added, and the results are stored in I.</li>
+<li><code>Dxyn</code> - <code>DRW Vx, Vy, nibble</code>. Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision. The interpreter reads n bytes from memory, starting at the address stored in I. These bytes are then displayed as sprites on screen at coordinates (Vx, Vy). Sprites are XORed onto the existing screen. If this causes any pixels to be erased, VF is set to 1, otherwise it is set to 0. If the sprite is positioned so part of it is outside the coordinates of the display, it wraps around to the opposite side of the screen. See instruction 8xy3 for more information on XOR, and section 2.4, Display, for more information on the Chip-8 screen and sprites.</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">n <span class="hljs-keyword">or </span>nibble - A <span class="hljs-number">4</span>-<span class="hljs-keyword">bit </span>value, the lowest <span class="hljs-number">4</span> <span class="hljs-keyword">bits </span>of the <span class="hljs-keyword">instruction</span><br><span class="hljs-keyword"></span>x - A <span class="hljs-number">4</span>-<span class="hljs-keyword">bit </span>value, the lower <span class="hljs-number">4</span> <span class="hljs-keyword">bits </span>of the high <span class="hljs-keyword">byte </span>of the <span class="hljs-keyword">instruction</span><br><span class="hljs-keyword"></span>y - A <span class="hljs-number">4</span>-<span class="hljs-keyword">bit </span>value, the upper <span class="hljs-number">4</span> <span class="hljs-keyword">bits </span>of the low <span class="hljs-keyword">byte </span>of the <span class="hljs-keyword">instruction</span><br><span class="hljs-keyword"></span>kk <span class="hljs-keyword">or </span><span class="hljs-keyword">byte </span>- An <span class="hljs-number">8</span>-<span class="hljs-keyword">bit </span>value, the lowest <span class="hljs-number">8</span> <span class="hljs-keyword">bits </span>of the <span class="hljs-keyword">instruction </span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="image-20231019224646952.png" srcset="/img/loading.gif" lazyload alt="image-20231019224646952"></p>
+<blockquote>
+<p>这篇文章的写法, “由于I是16位寄存器, 故这个draw指令可以打印出xxx内存的东西”,自然包括0x1010</p>
+</blockquote>
+<h2 id="0x03-exp">0x03 exp</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> LibcSearcher <span class="hljs-keyword">import</span> *<br>context(arch=<span class="hljs-string">&#x27;amd64&#x27;</span>,os=<span class="hljs-string">&#x27;linux&#x27;</span>,endianness=<span class="hljs-string">&#x27;big&#x27;</span>)<br><span class="hljs-comment">#context(log_level=&#x27;debug&#x27;)</span><br>r=process(<span class="hljs-string">&quot;./wrapper&quot;</span>)<br><span class="hljs-comment">#r=remote(&quot;node4.buuoj.cn&quot;,26990)</span><br>elf=ELF(<span class="hljs-string">&quot;./wrapper&quot;</span>)<br><span class="hljs-comment">#libc=ELF(&quot;./libc-2.23.so&quot;)</span><br><br>code=[<br>        <span class="hljs-number">0xafff</span>,                    <br>        <span class="hljs-number">0x6111</span> + <span class="hljs-number">0xf</span>*(),    <span class="hljs-comment"># 括号是偏移,一次打出0xf个字节</span><br>        <span class="hljs-number">0xf11e</span>,                    <br>        <span class="hljs-number">0xdbcf</span><br>        ]                     <br>romcode=<span class="hljs-string">b&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> code:<br>    romcode+=p16(i)<br><br><span class="hljs-built_in">print</span>(romcode)<br><br>r.sendline(romcode)<br><br>r.interactive()<br></code></pre></td></tr></table></figure>
+<p>分段改偏移, n位是f所以一次打0xf个字节的东西, 0xf乘以偏移改一下, 分次画flag就行了.</p>
+<p>最后出现的结果大概like this(一共有4截):</p>
+<p><img src="image-20231019225443175.png" srcset="/img/loading.gif" lazyload alt="image-20231019225443175"></p>
+<p>就是 这个东西:</p>
+<p><img src="image-20231019225548366.png" srcset="/img/loading.gif" lazyload alt="image-20231019225548366"></p>
+<h2 id="0x04-后话">0x04 后话</h2>
+<p>第一次系统的做了一整道VMpwn题, wings说普遍的vm题难度在逆向上, 这道题由于源码, opcode什么的全部给出, 并且利用是一个相对显而易见的越界, 所以<s>我事后</s>感觉这算是一个很简单的vm题, 只需要翻翻查查找到相关资料理解一下就行, 整个复现过程下来也稍微对vm题的过程有了一些实地感受, 要弄清楚内存, 寄存器等等东西的构造, 甚至可能还要理解opcode, <s>看着就像一个re人该做的事</s>, 更多偏向于读代码加调试, <s>听起来也比较烦人</s>😕</p>
+<blockquote>
+<p>唉 很简单的题 但一整篇都是溜着wp摸索下来的 我怎么这么菜啊😭</p>
+</blockquote>
 
                 
               </div>
@@ -309,8 +380,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/PWn/" class="category-chain-item">PWn</a>
+  <a href="/categories/Pwn/" class="category-chain-item">Pwn</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Pwn/VM/" class="category-chain-item">VM</a>
+  
+  
+
   
 
       </span>
@@ -329,7 +407,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CHIP-8</div>
+      <div>PWNmeCTF CHIP-8 复现</div>
       <div>http://example.com/2023/10/18/CHIP-8/</div>
     </div>
     <div class="license-meta">
