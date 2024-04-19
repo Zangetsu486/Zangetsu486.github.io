@@ -1,0 +1,888 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/pics/cat.jpg">
+  <link rel="icon" href="/pics/cat.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Luo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Rustlings intro 略过 不想写 Variables 1 加个 let 就彳亍… 2 … 3 … 4 声明一个 mut 即可. 5 Shadowing , 申请一个同名的变量. 6 Constants types must also always be annotated, 常量声明时必须标注类型. Functions 1 smjbdx… 2 函数参数必须标注类型. 3 … 没参数,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rustlings">
+<meta property="og:url" content="http://example.com/2024/04/19/Rustlings/index.html">
+<meta property="og:site_name" content="Luo&#39;s B1oG">
+<meta property="og:description" content="Rustlings intro 略过 不想写 Variables 1 加个 let 就彳亍… 2 … 3 … 4 声明一个 mut 即可. 5 Shadowing , 申请一个同名的变量. 6 Constants types must also always be annotated, 常量声明时必须标注类型. Functions 1 smjbdx… 2 函数参数必须标注类型. 3 … 没参数,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/pics/ferris.png">
+<meta property="article:published_time" content="2024-04-19T07:52:47.000Z">
+<meta property="article:modified_time" content="2024-04-19T07:53:26.086Z">
+<meta property="article:author" content="Luo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/pics/ferris.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Rustlings - Luo&#39;s B1oG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Luo&#39;s B1oG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/pics/ferris.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Rustlings"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-19 15:52" pubdate>
+          April 19, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          85 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Rustlings</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Rustlings">Rustlings</h2>
+<h3 id="intro">intro</h3>
+<p>略过 不想写</p>
+<h3 id="Variables">Variables</h3>
+<h4 id="1">1</h4>
+<p>加个 let 就彳亍…</p>
+<h4 id="2">2</h4>
+<p>…</p>
+<h4 id="3">3</h4>
+<p>…</p>
+<h4 id="4">4</h4>
+<p>声明一个 mut 即可.</p>
+<h4 id="5">5</h4>
+<p>Shadowing , 申请一个同名的变量.</p>
+<h4 id="6">6</h4>
+<p>Constants types must also always be annotated, 常量声明时必须标注类型.</p>
+<h3 id="Functions">Functions</h3>
+<h4 id="1-v2">1</h4>
+<p>smjbdx…</p>
+<h4 id="2-v2">2</h4>
+<p>函数参数必须标注类型.</p>
+<h4 id="3-v2">3</h4>
+<p>… 没参数, 随便给一个就行…</p>
+<h4 id="4-v2">4</h4>
+<p><code>sale_price</code> 函数没有给返回值类型, 填上即可.</p>
+<h4 id="5-v2">5</h4>
+<p>返回的语句多了一个分号, 有这个分号的话返回值类型会变成 <code>()</code> , 去掉这个分号的话就是一个表达式了.</p>
+<h3 id="IF">IF</h3>
+<h4 id="1-v3">1</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">bigger</span>(a: <span class="hljs-type">i32</span>, b: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;<br>    <span class="hljs-keyword">if</span> a &gt;= b &#123;<br>        a<br>    &#125; <span class="hljs-keyword">else</span>&#123;<br>        b<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-v3">2</h4>
+<p>同理随便改改…</p>
+<h4 id="3-v3">3</h4>
+<p>随便改改…</p>
+<h3 id="quiz1">quiz1</h3>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">calculate_price_of_apples</span>(num:<span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;<br>    <span class="hljs-keyword">if</span> num &lt;= <span class="hljs-number">40</span> &#123;<br>        num * <span class="hljs-number">2</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        num<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="primitive-types">primitive_types</h3>
+<h4 id="1-bools">1 bools</h4>
+<p>写个变量 = true 即可.</p>
+<h4 id="2-char">2 char</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">your_character</span> = &#x27;👴&#x27;;<br></code></pre></td></tr></table></figure>
+<p>👴, rust 中的 char 可以是任何一个字符, 记得没错的话是 unicode .</p>
+<h4 id="3-array">3 array</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> = [<span class="hljs-string">&quot;otto&quot;</span>;<span class="hljs-number">100</span>];<br></code></pre></td></tr></table></figure>
+<p>数组的声明方法, 和 c 的不怎么一样, 声明一个元素和元素个数.</p>
+<h4 id="4-slice">4 slice</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">nice_slice</span> = &amp;a[<span class="hljs-number">1</span>..<span class="hljs-number">4</span>];<br></code></pre></td></tr></table></figure>
+<p>如果要把索引 4 也加上就要 <code>[1..=4]</code> .</p>
+<h4 id="5-tuple">5 tuple</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">cat</span> = (<span class="hljs-string">&quot;Furry McFurson&quot;</span>, <span class="hljs-number">3.5</span>);<br><span class="hljs-keyword">let</span> (name,age) = cat;<br></code></pre></td></tr></table></figure>
+<p>let 可以对变量进行解构, 于是就可以对一个元组这么写.</p>
+<h4 id="6-tuple-index">6 tuple index</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">second</span> = numbers.<span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+<p>元组索引可以直接这么写啊, 彳亍.</p>
+<h3 id="vec">vec</h3>
+<h4 id="1-v4">1</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">v</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span>,<span class="hljs-number">40</span>];<br></code></pre></td></tr></table></figure>
+<p>如果不这么写就要:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">v</span> = <span class="hljs-type">Vec</span>::<span class="hljs-title function_ invoke__">new</span>();<br>pushpushpushpush...<br></code></pre></td></tr></table></figure>
+<p>第一种写法用的是 <code>vec![]</code> 这个宏, 这个宏可以方便的创建一个带有初始元素的 vec .</p>
+<h4 id="2-v4">2</h4>
+<p>感觉这个有点意思（</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">let</span> v: Vec&lt;i32&gt; = (<span class="hljs-number">1</span>..).filter(|x| x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>).take(<span class="hljs-number">5</span>).collect();<br></code></pre></td></tr></table></figure>
+<p>这行代码创建了一个 <code>Vec&lt;i32&gt;</code> 类型的变量 <code>v</code>。它使用了 Rust 的迭代器（iterator）功能。具体来说：</p>
+<ul>
+<li><code>(1..)</code> 创建了一个无限的整数范围，从1开始。</li>
+<li><code>.filter(|x| x % 2 == 0)</code> 过滤器用于保留能被2整除的整数，即偶数。</li>
+<li><code>.take(5)</code> 用于仅获取前5个满足条件的整数。</li>
+<li><code>.collect()</code> 将这些整数收集到一个 <code>Vec&lt;i32&gt;</code> 向量中。</li>
+</ul>
+<p>主体逻辑就是造了个只有偶数的向量传进要写的函数里面, 提供两种对这个向量进行操作的方法:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-number">1</span>.<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">vec_loop</span>(<span class="hljs-keyword">mut</span> v: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>    <span class="hljs-keyword">for</span> <span class="hljs-variable">element</span> <span class="hljs-keyword">in</span> v.<span class="hljs-title function_ invoke__">iter_mut</span>() &#123;<br>        *element *= <span class="hljs-number">2</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// At this point, `v` should be equal to [4, 8, 12, 16, 20].</span><br>    v<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>v.iter_mut()</code> 是针对 <code>Vec</code>（向量）类型的一个方法调用，用于<strong>创建一个可变引用的迭代器</strong>，该迭代器允许以可变的方式遍历向量中的元素。与 <code>v.iter()</code> 方法不同，<code>v.iter_mut()</code> 返回的迭代器允许修改向量中的元素。</p>
+<p>后续修改的时候只需要对这些可变引用解引用 + 操作即可, 这是第一种.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-number">2</span>.<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">vec_map</span>(v: &amp;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>    v.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">map</span>(|element| &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Do the same thing as above - but instead of mutating the</span><br>        <span class="hljs-comment">// Vec, you can just return the new number!</span><br>        element * <span class="hljs-number">2</span><br>    &#125;).<span class="hljs-title function_ invoke__">collect</span>()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>v_iter</code> 相对的就是<strong>创建一个不可变引用的迭代器</strong>, 后面的闭包捕获了迭代器中的元素作为它的参数 (大概是这样) , 然后对每个元素进行 *2 操作, 最后使用 <code>.collect()</code> 方法放进一个新的向量中, 再返回.</p>
+<h3 id="Move-semantics">Move_semantics</h3>
+<h4 id="1-v5">1</h4>
+<p>改个 mut .</p>
+<h4 id="2-v5">2</h4>
+<p>感觉这个也彳亍.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">vec0</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">22</span>, <span class="hljs-number">44</span>, <span class="hljs-number">66</span>];<br><br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vec1</span> = <span class="hljs-title function_ invoke__">fill_vec</span>(&amp;vec0);<br><br>    <span class="hljs-built_in">assert_eq!</span>(vec0, <span class="hljs-built_in">vec!</span>[<span class="hljs-number">22</span>, <span class="hljs-number">44</span>, <span class="hljs-number">66</span>]);<br>    <span class="hljs-built_in">assert_eq!</span>(vec1, <span class="hljs-built_in">vec!</span>[<span class="hljs-number">22</span>, <span class="hljs-number">44</span>, <span class="hljs-number">66</span>, <span class="hljs-number">88</span>]);<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">fill_vec</span>(vec: &amp;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vec</span> = vec.<span class="hljs-title function_ invoke__">clone</span>();<br><br>    vec.<span class="hljs-title function_ invoke__">push</span>(<span class="hljs-number">88</span>);<br><br>    vec<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里涉及到所有权的概念, 原本将 vec0 当做参数传进函数中, 但是这时候堆上数据的所有权已经给到了函数的参数而非之前的 vec0 , 以至于 vec0 不能在后面的 assert 中使用.</p>
+<p>解决方法可以是再创建一个 vec 传进函数, 也可以像上面这样传一个引用进去, 使用 clone 方法拿到值再返回去, 这样不存在所有权的改变.</p>
+<h4 id="3-v4">3</h4>
+<p>和第一个的区别就是参数, 其实这里在参数前面加个 mut 就可以.</p>
+<h4 id="4-v3">4</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vec1</span> = <span class="hljs-title function_ invoke__">fill_vec</span>();<br><br>    <span class="hljs-built_in">assert_eq!</span>(vec1, <span class="hljs-built_in">vec!</span>[<span class="hljs-number">22</span>, <span class="hljs-number">44</span>, <span class="hljs-number">66</span>, <span class="hljs-number">88</span>]);<br>&#125;<br><br><span class="hljs-comment">// `fill_vec()` no longer takes `vec: Vec&lt;i32&gt;` as argument - don&#x27;t change this!</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">fill_vec</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>    <span class="hljs-comment">// Instead, let&#x27;s create and fill the Vec in here - how do you do that?</span><br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vec</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">22</span>,<span class="hljs-number">44</span>,<span class="hljs-number">66</span>];<br><br>    vec.<span class="hljs-title function_ invoke__">push</span>(<span class="hljs-number">88</span>);<br><br>    vec<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>感觉这个东西有点多余, 但是似乎思想是 “这里可以不需要之前那种所有权的移动”.</p>
+<h4 id="5-v3">5</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">x</span> = <span class="hljs-number">100</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">y</span> = &amp;<span class="hljs-keyword">mut</span> x;<br>    *y += <span class="hljs-number">100</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">z</span> = &amp;<span class="hljs-keyword">mut</span> x;<br>    *z += <span class="hljs-number">1000</span>;<br>    <span class="hljs-built_in">assert_eq!</span>(x, <span class="hljs-number">1200</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>同一作用域中, 一个变量的可变引用只能有一个, 并且这个引用在最后一次使用后被销毁.</strong></p>
+<p>所以把声明 z 的位置放在 y 最后一次使用之后即可.</p>
+<h4 id="6-v2">6</h4>
+<p>先记录一下函数:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_char</span>(&amp;data: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">char</span> &#123;<br>    data.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">last</span>().<span class="hljs-title function_ invoke__">unwrap</span>()<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol>
+<li>
+<p><code>data.chars()</code></p>
+<p>这部分调用了 <code>String</code> 类型的 <code>chars()</code> 方法，该方法返回一个迭代器，用于遍历字符串 <code>data</code> 中的每个字符。</p>
+</li>
+<li>
+<p><code>.last()</code></p>
+<p><code>last()</code> 方法用于获取迭代器中的最后一个元素，即最后一个字符。由于 <code>chars()</code> 返回的是一个字符迭代器，因此 <code>.last()</code> 方法返回的是一个 <code>Option&lt;char&gt;</code> 类型的值，表示可能有字符或可能为空。</p>
+</li>
+<li>
+<p><code>.unwrap()</code></p>
+<p><code>unwrap()</code> 方法用于从 <code>Option</code> 类型的值中获取其内部的值。在这里，因为我们知道字符串不会为空（否则会出现 panic），所以可以安全地调用 <code>unwrap()</code> 方法来获取 <code>Option&lt;char&gt;</code> 类型的字符值。</p>
+</li>
+<li>
+<p><code>to_uppercase()</code></p>
+<p>变大写.</p>
+</li>
+</ol>
+<p>本体没那么难, 加加减减几个 <code>&amp;</code> 的事.</p>
+<h3 id="Struct">Struct</h3>
+<h4 id="1-v6">1</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">ColorClassicStruct</span> &#123;<br>    red :<span class="hljs-type">u8</span>,<br>    green :<span class="hljs-type">u8</span>,<br>    blue :<span class="hljs-type">u8</span>,<br>&#125;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">ColorTupleStruct</span>(<span class="hljs-type">u8</span>,<span class="hljs-type">u8</span>,<span class="hljs-type">u8</span>);<br><br><span class="hljs-meta">#[derive(Debug)]</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">UnitLikeStruct</span>;<br><br><span class="hljs-meta">#[cfg(test)]</span><br><span class="hljs-keyword">mod</span> tests &#123;<br>    <span class="hljs-keyword">use</span> super::*;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">classic_c_structs</span>() &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Instantiate a classic c struct!</span><br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">green</span> = ColorClassicStruct &#123;<br>            red: <span class="hljs-number">0</span>,<br>            green: <span class="hljs-number">255</span>,<br>            blue: <span class="hljs-number">0</span>,<br>        &#125;;<br><br>        <span class="hljs-built_in">assert_eq!</span>(green.red, <span class="hljs-number">0</span>);<br>        <span class="hljs-built_in">assert_eq!</span>(green.green, <span class="hljs-number">255</span>);<br>        <span class="hljs-built_in">assert_eq!</span>(green.blue, <span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">tuple_structs</span>() &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Instantiate a tuple struct!</span><br>         <span class="hljs-keyword">let</span> <span class="hljs-variable">green</span> = <span class="hljs-title function_ invoke__">ColorTupleStruct</span>(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0</span>);<br><br>        <span class="hljs-built_in">assert_eq!</span>(green.<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>        <span class="hljs-built_in">assert_eq!</span>(green.<span class="hljs-number">1</span>, <span class="hljs-number">255</span>);<br>        <span class="hljs-built_in">assert_eq!</span>(green.<span class="hljs-number">2</span>, <span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">unit_structs</span>() &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Instantiate a unit-like struct!</span><br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">unit_like_struct</span> = UnitLikeStruct;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">message</span> = <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;&#123;:?&#125;s are fun!&quot;</span>, unit_like_struct);<br><br>        <span class="hljs-built_in">assert_eq!</span>(message, <span class="hljs-string">&quot;UnitLikeStructs are fun!&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>一些基础的结构体的定义方法.</p>
+<h4 id="2-v6">2</h4>
+<p>照着 assert 写就彳亍, 其中 <code>String::from()</code> 是对切片/ <code>&amp;str</code> 类型的转换.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">your_order</span> = Order &#123;<br>            name: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;Hacker in Rust&quot;</span>),<br>            year: <span class="hljs-number">2019</span>,<br>            made_by_phone: <span class="hljs-literal">false</span>,<br>            made_by_mobile: <span class="hljs-literal">false</span>,<br>            made_by_email: <span class="hljs-literal">true</span>,<br>            item_number: <span class="hljs-number">123</span>,<br>            count: <span class="hljs-number">1</span>,<br>        &#125;;<br></code></pre></td></tr></table></figure>
+<h4 id="3-v5">3</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">is_international</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &#123;<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.sender_country == <span class="hljs-keyword">self</span>.recipient_country &#123;<br>            <span class="hljs-literal">false</span><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-literal">true</span><br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_fees</span>(&amp;<span class="hljs-keyword">self</span>, cents_per_gram: <span class="hljs-type">u32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">u32</span> &#123;<br>        cents_per_gram * <span class="hljs-keyword">self</span>.weight_in_grams<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>在 Rust 中，<code>self</code> 是一个特殊的关键字，用于表示结构体或者枚举类型的实例。在结构体或者枚举的方法中，<code>self</code> 用来引用当前实例。方法定义中的 <code>&amp;self</code> 表示一个不可变的引用，而 <code>&amp;mut self</code> 则表示一个可变的引用。这种引用的机制允许在方法中访问当前实例的字段或者调用其他方法。</p>
+<p>结构体 + 方法的使用.</p>
+<h3 id="Enums">Enums</h3>
+<h4 id="1-v7">1</h4>
+<p>把几个变体写上去就行.</p>
+<h4 id="2-v7">2</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Message</span> &#123;<br>    Move &#123;x:<span class="hljs-type">u32</span>,y:<span class="hljs-type">u32</span>&#125;,<br>    <span class="hljs-title function_ invoke__">Echo</span>(<span class="hljs-type">String</span>),<br>    <span class="hljs-title function_ invoke__">ChangeColor</span>(<span class="hljs-type">i32</span>,<span class="hljs-type">i32</span>,<span class="hljs-type">i32</span>),<br>    Quit,<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>写上变体规定点类型就行.</p>
+<h4 id="3-v6">3</h4>
+<p>可能用的没那么明白, 但是道理就是写一个 match 去匹配 enums 即可.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">process</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, message: Message) &#123;<br>        <span class="hljs-keyword">match</span> message &#123;<br>            Message::<span class="hljs-title function_ invoke__">ChangeColor</span>(c) =&gt; <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">change_color</span>(c),<br>            Message::<span class="hljs-title function_ invoke__">Echo</span>(c) =&gt; <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">echo</span>(c),<br>            Message::<span class="hljs-title function_ invoke__">Move</span>(c) =&gt; <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">move_position</span>(c),<br>            Message::Quit =&gt; <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">quit</span>(),<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p><code>#[cfg(test)]</code> 是 Rust 中的条件编译属性（Conditional Compilation Attribute）。它告诉 Rust 编译器在特定条件下是否编译代码块。</p>
+<p>在这个例子中，<code>#[cfg(test)]</code> 用于标记测试代码。通常情况下，测试代码不会在发布版本中使用，而是在开发过程中用于测试和调试。因此，通过 <code>#[cfg(test)]</code>，可以告诉编译器只在运行测试时编译这部分代码，而在发布时忽略它们。</p>
+<h3 id="Strings">Strings</h3>
+<h4 id="1-v8">1</h4>
+<p>函数返回值是个字面量, 但是返回值是 <code>String</code>.</p>
+<h4 id="2-v8">2</h4>
+<p>传个引用就行.</p>
+<h4 id="3-v7">3</h4>
+<p>字符串有关操作:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">trim_me</span>(input: &amp;<span class="hljs-type">str</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Remove whitespace from both ends of a string!</span><br>    <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(input.<span class="hljs-title function_ invoke__">trim</span>())<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">compose_me</span>(input: &amp;<span class="hljs-type">str</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Add &quot; world!&quot; to the string! There&#x27;s multiple ways to do this!</span><br>    input.<span class="hljs-title function_ invoke__">to_string</span>() + <span class="hljs-string">&quot; world!&quot;</span><br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">replace_me</span>(input: &amp;<span class="hljs-type">str</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Replace &quot;cars&quot; in the string with &quot;balloons&quot;!</span><br>    input.<span class="hljs-title function_ invoke__">to_string</span>().<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&quot;cars&quot;</span>,<span class="hljs-string">&quot;balloons&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>去除空格的 trim , 转换和字符串连接, 替换 replace .</p>
+<h4 id="4-v4">4</h4>
+<p>区分 <code>&amp;str</code> 和 <code>String</code> 型.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">string_slice</span>(arg: &amp;<span class="hljs-type">str</span>) &#123;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, arg);<br>&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">string</span>(arg: <span class="hljs-type">String</span>) &#123;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, arg);<br>&#125;<br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-title function_ invoke__">string_slice</span>(<span class="hljs-string">&quot;blue&quot;</span>);<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-string">&quot;red&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>());<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;hi&quot;</span>));<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-string">&quot;rust is fun!&quot;</span>.<span class="hljs-title function_ invoke__">to_owned</span>());<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-string">&quot;nice weather&quot;</span>.<span class="hljs-title function_ invoke__">into</span>());<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;Interpolation &#123;&#125;&quot;</span>, <span class="hljs-string">&quot;Station&quot;</span>));<br>    <span class="hljs-title function_ invoke__">string_slice</span>(&amp;<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;abc&quot;</span>)[<span class="hljs-number">0</span>..<span class="hljs-number">1</span>]);<br>    <span class="hljs-title function_ invoke__">string_slice</span>(<span class="hljs-string">&quot;  hello there &quot;</span>.<span class="hljs-title function_ invoke__">trim</span>());<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-string">&quot;Happy Monday!&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>().<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&quot;Mon&quot;</span>, <span class="hljs-string">&quot;Tues&quot;</span>));<br>    <span class="hljs-title function_ invoke__">string</span>(<span class="hljs-string">&quot;mY sHiFt KeY iS sTiCkY&quot;</span>.<span class="hljs-title function_ invoke__">to_lowercase</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>笔者遇到的坑是 <code>format!</code> 宏和 <code>to_lowercase()</code> 方法, 这两个方法的返回值都是 <code>String</code> 类型.</p>
+<h3 id="Module">Module</h3>
+<h4 id="1-v9">1</h4>
+<p>可见性问题, 加一个 <code>pub</code> 即可在 mod 外的作用域访问.</p>
+<h4 id="2-v9">2</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">mod</span> delicious_snacks &#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Fix these use statements</span><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">use</span> self::fruits::PEAR <span class="hljs-keyword">as</span> fruit;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">use</span> self::veggies::CUCUMBER <span class="hljs-keyword">as</span> veggie;<br><br>    <span class="hljs-keyword">mod</span> fruits &#123;<br>        <span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> PEAR: &amp;<span class="hljs-symbol">&#x27;static</span> <span class="hljs-type">str</span> = <span class="hljs-string">&quot;Pear&quot;</span>;<br>        <span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> APPLE: &amp;<span class="hljs-symbol">&#x27;static</span> <span class="hljs-type">str</span> = <span class="hljs-string">&quot;Apple&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">mod</span> veggies &#123;<br>        <span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> CUCUMBER: &amp;<span class="hljs-symbol">&#x27;static</span> <span class="hljs-type">str</span> = <span class="hljs-string">&quot;Cucumber&quot;</span>;<br>        <span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> CARROT: &amp;<span class="hljs-symbol">&#x27;static</span> <span class="hljs-type">str</span> = <span class="hljs-string">&quot;Carrot&quot;</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-built_in">println!</span>(<br>        <span class="hljs-string">&quot;favorite snacks: &#123;&#125; and &#123;&#125;&quot;</span>,<br>        delicious_snacks::fruit,<br>        delicious_snacks::veggie<br>    );<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>根据 main 里面的使用来修改 mod 的内容即可, use 要加可见性限制.</p>
+<h4 id="3-v8">3</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::time::&#123;SystemTime,UNIX_EPOCH&#125;;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">match</span> SystemTime::<span class="hljs-title function_ invoke__">now</span>().<span class="hljs-title function_ invoke__">duration_since</span>(UNIX_EPOCH) &#123;<br>        <span class="hljs-title function_ invoke__">Ok</span>(n) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;1970-01-01 00:00:00 UTC was &#123;&#125; seconds ago!&quot;</span>, n.<span class="hljs-title function_ invoke__">as_secs</span>()),<br>        <span class="hljs-title function_ invoke__">Err</span>(_) =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;SystemTime before UNIX EPOCH!&quot;</span>),<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>导入标准库的包和成员, 整体是个计算时间的函数.</p>
+<h3 id="Hashmap">Hashmap</h3>
+<h4 id="1-v10">1</h4>
+<p>介绍 hashmap , 每个 hashmap 包括了 key 和 value 两部分.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">fruit_basket</span>() <span class="hljs-punctuation">-&gt;</span> HashMap&lt;<span class="hljs-type">String</span>, <span class="hljs-type">u32</span>&gt; &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">basket</span> = HashMap::<span class="hljs-title function_ invoke__">new</span>();<br><br>    <span class="hljs-comment">// Two bananas are already given for you :)</span><br>    basket.<span class="hljs-title function_ invoke__">insert</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;banana&quot;</span>), <span class="hljs-number">2</span>);<br>    basket.<span class="hljs-title function_ invoke__">insert</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;otto&quot;</span>), <span class="hljs-number">6</span>);<br>    basket.<span class="hljs-title function_ invoke__">insert</span>(<span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;dog&quot;</span>), <span class="hljs-number">6</span>);<br><br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Put more fruits in your basket here.</span><br><br>    basket<br>&#125;<br><br><span class="hljs-meta">#[cfg(test)]</span><br><span class="hljs-keyword">mod</span> tests &#123;<br>    <span class="hljs-keyword">use</span> super::*;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">at_least_three_types_of_fruits</span>() &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">basket</span> = <span class="hljs-title function_ invoke__">fruit_basket</span>();<br>        <span class="hljs-built_in">assert!</span>(basket.<span class="hljs-title function_ invoke__">len</span>() &gt;= <span class="hljs-number">3</span>);<br>    &#125;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">at_least_five_fruits</span>() &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">basket</span> = <span class="hljs-title function_ invoke__">fruit_basket</span>();<br>        <span class="hljs-built_in">assert!</span>(basket.<span class="hljs-title function_ invoke__">values</span>().sum::&lt;<span class="hljs-type">u32</span>&gt;() &gt;= <span class="hljs-number">5</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>hashmap 的长度是由对数决定的, 有多少个键值对就有多长.</li>
+<li><code>basket.values().sum::&lt;u32&gt;()</code> 是一个快捷计算 hashmap 中的 value 和的方法.</li>
+</ul>
+<h4 id="2-v10">2</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-meta">#[derive(Hash, PartialEq, Eq)]</span><br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Fruit</span> &#123;<br>    Apple,<br>    Banana,<br>    Mango,<br>    Lychee,<br>    Pineapple,<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">fruit_basket</span>(basket: &amp;<span class="hljs-keyword">mut</span> HashMap&lt;Fruit, <span class="hljs-type">u32</span>&gt;) &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">fruit_kinds</span> = <span class="hljs-built_in">vec!</span>[<br>        Fruit::Apple,<br>        Fruit::Banana,<br>        Fruit::Mango,<br>        Fruit::Lychee,<br>        Fruit::Pineapple,<br>    ];<br><br>    <span class="hljs-keyword">for</span> <span class="hljs-variable">fruit</span> <span class="hljs-keyword">in</span> fruit_kinds &#123;<br>        basket.<span class="hljs-title function_ invoke__">entry</span>(fruit).<span class="hljs-title function_ invoke__">or_insert</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">#[cfg(test)]</span><br><span class="hljs-keyword">mod</span> tests &#123;<br>    <span class="hljs-keyword">use</span> super::*;<br><br>    <span class="hljs-comment">// Don&#x27;t modify this function!</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_fruit_basket</span>() <span class="hljs-punctuation">-&gt;</span> HashMap&lt;Fruit, <span class="hljs-type">u32</span>&gt; &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">basket</span> = HashMap::&lt;Fruit, <span class="hljs-type">u32</span>&gt;::<span class="hljs-title function_ invoke__">new</span>();<br>        basket.<span class="hljs-title function_ invoke__">insert</span>(Fruit::Apple, <span class="hljs-number">4</span>);<br>        basket.<span class="hljs-title function_ invoke__">insert</span>(Fruit::Mango, <span class="hljs-number">2</span>);<br>        basket.<span class="hljs-title function_ invoke__">insert</span>(Fruit::Lychee, <span class="hljs-number">5</span>);<br><br>        basket<br>    &#125;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">test_given_fruits_are_not_modified</span>() &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">basket</span> = <span class="hljs-title function_ invoke__">get_fruit_basket</span>();<br>        <span class="hljs-title function_ invoke__">fruit_basket</span>(&amp;<span class="hljs-keyword">mut</span> basket);<br>        <span class="hljs-built_in">assert_eq!</span>(*basket.<span class="hljs-title function_ invoke__">get</span>(&amp;Fruit::Apple).<span class="hljs-title function_ invoke__">unwrap</span>(), <span class="hljs-number">4</span>);<br>        <span class="hljs-built_in">assert_eq!</span>(*basket.<span class="hljs-title function_ invoke__">get</span>(&amp;Fruit::Mango).<span class="hljs-title function_ invoke__">unwrap</span>(), <span class="hljs-number">2</span>);<br>        <span class="hljs-built_in">assert_eq!</span>(*basket.<span class="hljs-title function_ invoke__">get</span>(&amp;Fruit::Lychee).<span class="hljs-title function_ invoke__">unwrap</span>(), <span class="hljs-number">5</span>);<br>    &#125;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">at_least_five_types_of_fruits</span>() &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">basket</span> = <span class="hljs-title function_ invoke__">get_fruit_basket</span>();<br>        <span class="hljs-title function_ invoke__">fruit_basket</span>(&amp;<span class="hljs-keyword">mut</span> basket);<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">count_fruit_kinds</span> = basket.<span class="hljs-title function_ invoke__">len</span>();<br>        <span class="hljs-built_in">assert!</span>(count_fruit_kinds &gt;= <span class="hljs-number">5</span>);<br>    &#125;<br><br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">greater_than_eleven_fruits</span>() &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">basket</span> = <span class="hljs-title function_ invoke__">get_fruit_basket</span>();<br>        <span class="hljs-title function_ invoke__">fruit_basket</span>(&amp;<span class="hljs-keyword">mut</span> basket);<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">count</span> = basket.<span class="hljs-title function_ invoke__">values</span>().sum::&lt;<span class="hljs-type">u32</span>&gt;();<br>        <span class="hljs-built_in">assert!</span>(count &gt; <span class="hljs-number">11</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">#[test]</span><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">all_fruit_types_in_basket</span>() &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">basket</span> = <span class="hljs-title function_ invoke__">get_fruit_basket</span>();<br>        <span class="hljs-title function_ invoke__">fruit_basket</span>(&amp;<span class="hljs-keyword">mut</span> basket);<br>        <span class="hljs-keyword">for</span> <span class="hljs-variable">amount</span> <span class="hljs-keyword">in</span> basket.<span class="hljs-title function_ invoke__">values</span>() &#123;<br>            <span class="hljs-built_in">assert_ne!</span>(amount, &amp;<span class="hljs-number">0</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>题中主要保证键值对数量 &gt; 5 , 并且枚举的每一种都要用到.</p>
+<p>所以这里的关键是:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">for</span> <span class="hljs-variable">fruit</span> <span class="hljs-keyword">in</span> fruit_kinds &#123;<br>        basket.<span class="hljs-title function_ invoke__">entry</span>(fruit).<span class="hljs-title function_ invoke__">or_insert</span>(<span class="hljs-number">1</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>查询这个 hashmap 中有没有这个东西, 没有就插入一个, value = 1</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OS/" class="category-chain-item">OS</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/OS/Rust/" class="category-chain-item">Rust</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Rustlings</div>
+      <div>http://example.com/2024/04/19/Rustlings/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Luo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 19, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 19, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/19/Rusttt/" title="Rusttt">
+                        <span class="hidden-mobile">Rusttt</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://pl-c579209fn-zangetsu486s-projects.vercel.app/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Read: 
+        <span id="busuanzi_value_site_pv"></span>
+         
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Reader: 
+        <span id="busuanzi_value_site_uv"></span>
+         
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

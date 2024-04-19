@@ -1,0 +1,1099 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/pics/cat.jpg">
+  <link rel="icon" href="/pics/cat.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Luo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Rusttttt 给 [rust](Rustacean.net: Home of Ferris the Crab) 稍微做点记录, (虽然估计这种笔记一样的法子不一定有用, 但是个人比较想写下来 顺序十有八九会很混乱, 属于是看到哪里就记录到哪里的类型了, 下文里面全角是原文, 半角是笔者自己写的一些各种东西 照着这些学的: [rust-by-example](格式化输出 - 通过例子学 Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rusttt">
+<meta property="og:url" content="http://example.com/2024/04/19/Rusttt/index.html">
+<meta property="og:site_name" content="Luo&#39;s B1oG">
+<meta property="og:description" content="Rusttttt 给 [rust](Rustacean.net: Home of Ferris the Crab) 稍微做点记录, (虽然估计这种笔记一样的法子不一定有用, 但是个人比较想写下来 顺序十有八九会很混乱, 属于是看到哪里就记录到哪里的类型了, 下文里面全角是原文, 半角是笔者自己写的一些各种东西 照着这些学的: [rust-by-example](格式化输出 - 通过例子学 Rust">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/pics/ferris.png">
+<meta property="article:published_time" content="2024-04-19T07:49:39.000Z">
+<meta property="article:modified_time" content="2024-04-19T07:52:35.506Z">
+<meta property="article:author" content="Luo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/pics/ferris.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Rusttt - Luo&#39;s B1oG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Luo&#39;s B1oG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/pics/ferris.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Rusttt"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-19 15:49" pubdate>
+          April 19, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          101 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Rusttt</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Rusttttt">Rusttttt</h2>
+<p>给 [rust](<a target="_blank" rel="noopener" href="https://www.rustacean.net/">Rustacean.net: Home of Ferris the Crab</a>) 稍微做点记录, (虽然估计这种笔记一样的法子不一定有用, 但是个人比较想写下来</p>
+<p>顺序十有八九会很混乱, 属于是看到哪里就记录到哪里的类型了, 下文里面全角是原文, 半角是笔者自己写的一些各种东西</p>
+<p>照着这些学的: [rust-by-example](<a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/rust-by-example/hello/print.html">格式化输出 - 通过例子学 Rust 中文版 (rustwiki.org)</a>), [rust圣经](<a target="_blank" rel="noopener" href="https://course.rs/first-try/installation.html">安装 Rust 环境 - Rust语言圣经(Rust Course)</a>), [练习题](<a target="_blank" rel="noopener" href="https://github.com/sunface/rust-by-practice?tab=readme-ov-file">sunface/rust-by-practice: Learning Rust By Practice, narrowing the gap between beginner and skilled-dev through challenging examples, exercises and projects. (github.com)</a>).</p>
+<blockquote>
+<p>后面暂时懒得写了, 有时间写完就补.</p>
+</blockquote>
+<h3 id="0x00-安装环境">0x00 安装环境</h3>
+<p>暂时还在 win 上学 rust , 下个 c++ 环境然后使用 rustup , 等过段时间在 arch 装了会补.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh<br></code></pre></td></tr></table></figure>
+<h3 id="0x01-Rust-格式化输出">0x01 Rust 格式化输出</h3>
+<blockquote>
+<p>这个宏的作用似乎就是让写 c 和 py 中 fmt 的人更加熟悉, 反正也没学好, 再学一遍.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/fmt/"><code>std::fmt</code></a> 包含多种 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/rust-by-example/trait.html"><code>trait</code></a>（特质）来控制文字显示，其中重要的两种 trait 的基本形式如下：</p>
+<ul>
+<li><code>fmt::Debug</code>：使用 <code>&#123;:?&#125;</code> 标记。格式化文本以供调试使用.</li>
+<li><code>fmt::Display</code>：使用 <code>&#123;&#125;</code> 标记。以更优雅和友好的风格来格式化文本.</li>
+</ul>
+<p>基本的格式化宏是这些:</p>
+<ul>
+<li><code>format!</code>：将格式化文本写到字符串</li>
+<li><code>print!</code>：与 <code>format!</code> 类似，但将文本输出到控制台（io::stdout）。</li>
+<li><code>println!</code>: 与 <code>print!</code> 类似，但输出结果追加一个换行符。</li>
+<li><code>eprint!</code>：与 <code>print!</code> 类似，但将文本输出到标准错误（io::stderr）。</li>
+<li><code>eprintln!</code>：与 <code>eprint!</code> 类似，但输出结果追加一个换行符。</li>
+</ul>
+<p>参数也有很多种, 比如可以使用 <code>&#123;1&#125;</code> 这种位置参数, 也可以是命名参数,</p>
+<p>还可以应用一些诸如<strong>宽度</strong>/<strong>对齐</strong>这一类的, 比如宽度:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello &#123;:5&#125;!&quot;</span>, <span class="hljs-string">&quot;x&quot;</span>);<br><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello &#123;:1$&#125;!&quot;</span>, <span class="hljs-string">&quot;x&quot;</span>, <span class="hljs-number">5</span>);<br><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello &#123;1:0$&#125;!&quot;</span>, <span class="hljs-number">5</span>, <span class="hljs-string">&quot;x&quot;</span>);<br><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello &#123;:width$&#125;!&quot;</span>, <span class="hljs-string">&quot;x&quot;</span>, width = <span class="hljs-number">5</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">width</span> = <span class="hljs-number">5</span>;<br><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello &#123;:width$&#125;!&quot;</span>, <span class="hljs-string">&quot;x&quot;</span>);<br><br><span class="hljs-comment">//result: Hello x    !</span><br></code></pre></td></tr></table></figure>
+<p>比如说要补全, 例如从 10 变到 0010 需要 <code>&#123;:04&#125;</code> , 指定宽度 + 填充字符.</p>
+<blockquote>
+<p>这和 c 的格式化字符串的那些参数基本类似, 不多赘述了（</p>
+</blockquote>
+<h3 id="0x02-变量">0x02 变量</h3>
+<h4 id="绑定-可变性">绑定/可变性</h4>
+<p>rust 圣经里面说: 在其他语言中给一个变量赋值大概是一个这样的语句: <code>var a = 'otto'</code> ,</p>
+<p>而在 rust 中, 这个赋值过程是这样的写法:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> = <span class="hljs-symbol">&#x27;otto</span>&#x27;<br></code></pre></td></tr></table></figure>
+<p>这个过程在 rust 中有一个新名字叫 ‘变量绑定’ .</p>
+<blockquote>
+<p>为何不用赋值而用绑定呢（其实你也可以称之为赋值，但是绑定的含义更清晰准确）？这里就涉及 Rust 最核心的原则——<strong>所有权</strong>，简单来讲，任何内存对象都是有主人的，而且一般情况下完全属于它的主人，绑定就是把这个对象绑定给一个变量，让这个变量成为它的主人（聪明的读者应该能猜到，在这种情况下，该对象之前的主人就会丧失对该对象的所有权），像极了我们的现实世界，不是吗？</p>
+<p>这似乎看起来非常安全的样子（</p>
+</blockquote>
+<p>绑定后的变量在一般情况下是不可变的, 即:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = <span class="hljs-number">5</span>;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;The value of x is: &#123;&#125;&quot;</span>, x);<br>    x = <span class="hljs-number">6</span>;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;The value of x is: &#123;&#125;&quot;</span>, x);<br>&#125;<br><span class="hljs-comment">// cannot assign twice to immutable variable x</span><br></code></pre></td></tr></table></figure>
+<p>这种单纯使用类似 c 一样的赋值语句会报错 ‘无法对不可变的变量重复赋值’, 如果想要让这个变量是可变的, 只需要加入 <code>mut</code> 关键字即可.</p>
+<h4 id="下划线忽略">下划线忽略</h4>
+<p>如果我们创建一个变量却不使用的话, 只需在前面加一个下划线, 编译器就不会给出提示.</p>
+<blockquote>
+<p>感觉这也是偏向于安全性的提醒, 挺有趣的（</p>
+</blockquote>
+<h4 id="变量解构">变量解构</h4>
+<p><code>let</code> 表达式不仅仅用于变量的绑定，还能进行复杂变量的解构：从一个相对复杂的变量中，匹配出该变量的一部分内容.</p>
+<blockquote>
+<p>好像很复杂, 实际看起来就是匹配复杂表达式的值的感觉, 强调 let 的使用.</p>
+</blockquote>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Struct</span> &#123;<br>    e: <span class="hljs-type">i32</span><br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> (a, b, c, d, e);<br><br>    (a, b) = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<br>    <span class="hljs-comment">// _ 代表匹配一个值，但是我们不关心具体的值是什么，因此没有使用一个变量名而是使用了 _</span><br>    [c, .., d, _] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];<br>    Struct &#123; e, .. &#125; = Struct &#123; e: <span class="hljs-number">5</span> &#125;;<br><br>    <span class="hljs-built_in">assert_eq!</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [a, b, c, d, e]);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="常量-变量">常量/变量</h4>
+<blockquote>
+<p>本来觉得 let 声明的变量不可变和 const 是差不多的（</p>
+</blockquote>
+<p>rust 中也存在 const 关键字, 不可用 mut 标注, 且自始至终不可变, 这样看来似乎 mut 是单纯维护安全性的设定了, Rust 常量的命名约定是全部字母都使用大写, 并使用下划线分隔单词, 另外对数字字面量可插入下划线以提高可读性.</p>
+<h4 id="相同变量-shadowing">相同变量 (shadowing)</h4>
+<p>rust 在声明相同名字的变量时采取后者覆盖前者的一个设定,</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = <span class="hljs-number">5</span>;<br>    <span class="hljs-comment">// 在main函数的作用域内对之前的x进行遮蔽</span><br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = x + <span class="hljs-number">1</span>;<br><br>    &#123;<br>        <span class="hljs-comment">// 在当前的花括号作用域内，对之前的x进行遮蔽</span><br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = x * <span class="hljs-number">2</span>;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;The value of x in the inner scope is: &#123;&#125;&quot;</span>, x);<br>    &#125;<br><br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;The value of x is: &#123;&#125;&quot;</span>, x);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>但是这些叫做 x 的变量是完全不同的几个东西, 实际上是多次声明相同变量的行为.</p>
+<h3 id="0x03-各种类型">0x03 各种类型</h3>
+<p>Rust 每个值都有其确切的数据类型，总的来说可以分为两类：基本类型和复合类型。 基本类型意味着它们往往是一个最小化原子类型，无法解构为其它类型(一般意义上来说)，由以下组成：</p>
+<ul>
+<li>数值类型: 有符号整数 (<code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>isize</code>)、 无符号整数 (<code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>usize</code>) 、浮点数 (<code>f32</code>, <code>f64</code>)、以及有理数、复数</li>
+<li>字符串：字符串字面量和字符串切片 <code>&amp;str</code></li>
+<li>布尔类型：<code>true</code>和<code>false</code></li>
+<li>字符类型: 表示单个 Unicode 字符，存储为 4 个字节</li>
+<li>单元类型: 即 <code>()</code> ，其唯一的值也是 <code>()</code></li>
+</ul>
+<h4 id="类型推导">类型推导</h4>
+<p>这里大概的意思就是, rust 编译器比较智能, 它可以适当推测这个变量是个什么类型, 比如:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">guess</span> = <span class="hljs-string">&quot;42&quot;</span>.<span class="hljs-title function_ invoke__">parse</span>().<span class="hljs-title function_ invoke__">expect</span>(<span class="hljs-string">&quot;Not a number!&quot;</span>);<br></code></pre></td></tr></table></figure>
+<p>在给出这个 let 语句之后, 编译器就会猜这是个什么东西, 如果能猜出来就猜出来了, 猜不出来会报错.</p>
+<p>但是实际上又没有那么智能, 所以实际上需要一些标注, 像这样:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">20</span>;<br></code></pre></td></tr></table></figure>
+<p>类型后缀也可以, 比如 <code>let a = 20i32</code> .</p>
+<p><strong>在 rust 中, 只有同一类型的变量才可进行比较.</strong></p>
+<h4 id="数值">数值</h4>
+<h5 id="整数">整数</h5>
+<p><strong>整数</strong>是没有小数部分的数字。之前使用过的 <code>i32</code> 类型，表示有符号的 32 位整数（ <code>i</code> 是英文单词 <em>integer</em> 的首字母，与之相反的是 <code>u</code>，代表无符号 <code>unsigned</code> 类型）。下表显示了 Rust 中的内置的整数类型：</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>有符号类型</th>
+<th>无符号类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8 位</td>
+<td><code>i8</code></td>
+<td><code>u8</code></td>
+</tr>
+<tr>
+<td>16 位</td>
+<td><code>i16</code></td>
+<td><code>u16</code></td>
+</tr>
+<tr>
+<td>32 位</td>
+<td><code>i32</code></td>
+<td><code>u32</code></td>
+</tr>
+<tr>
+<td>64 位</td>
+<td><code>i64</code></td>
+<td><code>u64</code></td>
+</tr>
+<tr>
+<td>128 位</td>
+<td><code>i128</code></td>
+<td><code>u128</code></td>
+</tr>
+<tr>
+<td>视架构而定</td>
+<td><code>isize</code></td>
+<td><code>usize</code></td>
+</tr>
+</tbody>
+</table>
+<p>在 rust 中, 整型默认是 i32 .</p>
+<p>整形字面量可以用下表的形式书写：</p>
+<table>
+<thead>
+<tr>
+<th>数字字面量</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>十进制</td>
+<td><code>98_222</code></td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td><code>0xff</code></td>
+</tr>
+<tr>
+<td>八进制</td>
+<td><code>0o77</code></td>
+</tr>
+<tr>
+<td>二进制</td>
+<td><code>0b1111_0000</code></td>
+</tr>
+<tr>
+<td>字节 (仅限于 <code>u8</code>)</td>
+<td><code>b'A'</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>这个设计感觉是为了可读性设计的, 诸如我们现在看大数字的三位一分隔:</p>
+<p>即 1000000 -&gt; 1_000_000 .</p>
+</blockquote>
+<h5 id="整数溢出">整数溢出 (?</h5>
+<blockquote>
+<p>原理在这里就不多写了, 毕竟笔者是做 pwn 的（</p>
+</blockquote>
+<p>有趣的点是, 在 rust 的 debug 模式下编译时会检测整数溢出, 如果存在这个问题就不过编译 (这个感觉挺有趣的) , 似乎如果是不在 debug 下编译的话会按照补码循环的方式 (其实就基本上是 c 的整数溢出处理方式) 去处理溢出, 并不会 panic .</p>
+<p>但是 rust 中也给了一些显式处理溢出的办法:</p>
+<ul>
+<li>使用 <code>wrapping_*</code> 方法在所有模式下都按照补码循环溢出规则处理，例如 <code>wrapping_add</code></li>
+<li>如果使用 <code>checked_*</code> 方法时发生溢出，则返回 <code>None</code> 值</li>
+<li>使用 <code>overflowing_*</code> 方法返回该值和一个指示是否存在溢出的布尔值</li>
+<li>使用 <code>saturating_*</code> 方法，可以限定计算后的结果不超过目标类型的最大值或低于最小值.</li>
+</ul>
+<p>自己演示了一下这几个方法:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>()&#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> : <span class="hljs-type">u8</span> = <span class="hljs-number">251</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = a.<span class="hljs-title function_ invoke__">saturating_add</span>(<span class="hljs-number">1</span><span class="hljs-comment">/*10*/</span>);<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;otto &#123;:?&#125;&quot;</span>,b);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面几个例子里面后面的 ‘*’ 指的都是运算, 实际结果在 <code>checked</code> 这里会有一点区别, 会返回一个 <code>Some(xxx)</code> , 除此之外写个代码调一下都比较好懂.</p>
+<h5 id="浮点数">浮点数</h5>
+<blockquote>
+<p>这里看 rust 圣经的写法感觉 rust 还挺重视底层逻辑的（大概是这种想法</p>
+</blockquote>
+<p>默认浮点数类型是 <code>f64</code> .</p>
+<p>在这里浮点数使用的时候会出现一些所谓 ‘陷阱’, 但是似乎就是二进制不能准确完美表达十进制数字所导致的一些陷阱, 于是结果就是在实际 rust 计算的时候, <code>0.1 + 0.2 != 0.3</code> 的样子.</p>
+<h5 id="NaN">NaN</h5>
+<p>对于数学上未定义的结果，例如对负数取平方根 <code>-42.1.sqrt()</code> ，会产生一个特殊的结果：Rust 的浮点数类型使用 <code>NaN</code> (not a number)来处理这些情况。</p>
+<p><strong>所有跟 <code>NaN</code> 交互的操作，都会返回一个 <code>NaN</code></strong>，而且 <code>NaN</code> 不能用来比较.</p>
+<p>这里还提到一个 <code>is_nan()</code> 的方法可以处理这种情况, 感觉就是返回 1 和 0 的区别, 有时间调一下(</p>
+<h4 id="运算">运算</h4>
+<p>运算和已知的那些运算是几乎等同的, 包括数字运算以及位运算, 但是也要求同类型, <s>懒得多写了</s>.</p>
+<h4 id="序列-Range">序列 (Range)</h4>
+<p>这个看样子是 rust 提供的一个简单的生成连续数值的方法, 方便应用于循环中. 举个例子:</p>
+<ul>
+<li><code>1..5</code> 生成不包括 5 的连续数字, 即 1-4</li>
+<li><code>1..=5</code> 则会包括 5 .</li>
+</ul>
+<p>但是这种序列只允许应用于数字和字符中, 原因是它们可以连续, 同时编译器也可以进行检查.</p>
+<h4 id="字符-char">字符 (char)</h4>
+<p>在 rust 中的字符这个概念很有意思, 这里的字符不仅仅是 <code>ASCII</code> , 所有的 <code>unicode</code> 都可以当作字符, 包括但不限于中文汉字, 其他的神魔语言, 甚至是 ‘👴’.</p>
+<p>正因为是 <code>Unicode</code> 的形式, rust 中的字符是占用 4 字节的.</p>
+<p>但是字符只能用 <code>''</code> 表示, <code>&quot;&quot;</code> 是表示字符串时使用的.</p>
+<h4 id="Others">Others</h4>
+<p>rust 圣经中还有一个 bool 和一个单元类型, bool 不用多说.</p>
+<p>单元类型的话笔者想摘抄一下圣经原文:</p>
+<blockquote>
+<p>单元类型就是 <code>()</code> ，对，你没看错，就是 <code>()</code> ，唯一的值也是 <code>()</code> ，一些读者读到这里可能就不愿意了，你也太敷衍了吧，管这叫类型？</p>
+<p>只能说，再不起眼的东西，都有其用途，在目前为止的学习过程中，大家已经看到过很多次 <code>fn main()</code> 函数的使用吧？那么这个函数返回什么呢？</p>
+<p>没错， <code>main</code> 函数就返回这个单元类型 <code>()</code>，你不能说 <code>main</code> 函数无返回值，因为没有返回值的函数在 Rust 中是有单独的定义的：<code>发散函数( diverge function )</code>，顾名思义，无法收敛的函数。</p>
+<p>例如常见的 <code>println!()</code> 的返回值也是单元类型 <code>()</code>。</p>
+<p>再比如，你可以用 <code>()</code> 作为 <code>map</code> 的值，表示我们不关注具体的值，只关注 <code>key</code>。 这种用法和 Go 语言的 <em><strong>struct{}</strong></em> 类似，可以作为一个值用来占位，但是完全<strong>不占用</strong>任何内存。</p>
+<p>似乎在 rust 中很看重 ‘内存’ 以及其管理之类的一些概念（</p>
+</blockquote>
+<h4 id="语句-表达式">语句/表达式</h4>
+<p>这两个概念在 rust 中分的很明确, 看起来也是很重要的两个概念.</p>
+<p>大概看上去的区别就是, 语句是不返回一个值的, 而表达式是一定会返回值的, 所以在 rust 中, 包括去调用一个函数, 包括写一个常数, 有返回的值就是个表达式.</p>
+<p>在比如函数返回值的表达式写法上 (或者是别的神魔东西) 有个要素就是不能有分号, 如果加了分号就会从表达式变成一条语句, 而不会返回值.</p>
+<p>最后, 如果一个表达式不返回任何值的话, 会隐式返回一个单元类型 <code>()</code> .</p>
+<h4 id="函数">函数</h4>
+<p>已经 8 是很陌生的一个概念 🌶 .</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">add</span>(i: <span class="hljs-type">i32</span>, j: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;<br>   i + j<br> &#125;<br></code></pre></td></tr></table></figure>
+<p>就像这样, 在 rust 函数中, 函数名和变量名采用 <code>snake_case</code> 命名, 位置随意, 只要定义即可过编译的样子.</p>
+<h5 id="参数">参数</h5>
+<p>在 rust 函数中的每一个参数都需要标注出它的具体类型, 箭头后面标注返回值类型, 8 然就会报错.</p>
+<h5 id="返回">返回</h5>
+<p>正常来说 rust 函数的返回值是最后一条表达式的返回值, 同时也可以使用 <code>return</code> 提前返回.</p>
+<h5 id="特殊返回">特殊返回</h5>
+<p>比如无返回值 ‘()’ , 如上提到的, 如果函数不给返回值则会返回一个 ‘()’, 如果误写一个语句做函数结尾的话也会返回一个 ‘()’ , 这东西就是用来表示 ‘无返回值’ 这一概念的.</p>
+<p>还有在上面摘过的 <code>diverge function</code> 这一概念, 原文的表述是永不返回的发散函数, 这是一个 ‘不会返回的函数’ 的概念, 和返回 ‘()’ 是完全不一样的.</p>
+<h3 id="0x04-所有权-借用">0x04 所有权/借用</h3>
+<p>学到这里的时候稍微查了一下, 对 rust 的介绍就是一种重视安全性的语言, 所以在开始看这个 ‘所有权’ 的概念的时候就觉得这种机制应该十有八九就是对安全性的一些实现了.</p>
+<h4 id="所有权">所有权</h4>
+<blockquote>
+<p>引用一下原文, 顺便多了解一些计算机机制.</p>
+</blockquote>
+<p>所有的程序都必须和计算机内存打交道，如何从内存中申请空间来存放程序的运行内容，如何在不需要的时候释放这些空间，成了重中之重，也是所有编程语言设计的难点之一。在计算机语言不断演变过程中，出现了三种流派：</p>
+<ul>
+<li><strong>垃圾回收机制(GC)</strong>，在程序运行时不断寻找不再使用的内存，典型代表：Java、Go</li>
+<li><strong>手动管理内存的分配和释放</strong>, 在程序中，通过函数调用的方式来申请和释放内存，典型代表：C++</li>
+<li><strong>通过所有权来管理内存</strong>，编译器在编译时会根据一系列规则进行检查</li>
+</ul>
+<p>其中 Rust 选择了第三种，最妙的是，这种检查只发生在编译期，因此对于程序运行期，不会有任何性能上的损失。</p>
+<p>先来看看一段来自 C 语言的糟糕代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span>* <span class="hljs-title function_">foo</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> a;          <span class="hljs-comment">// 变量a的作用域开始</span><br>    a = <span class="hljs-number">100</span>;<br>    <span class="hljs-type">char</span> *c = <span class="hljs-string">&quot;xyz&quot;</span>;   <span class="hljs-comment">// 变量c的作用域开始</span><br>    <span class="hljs-keyword">return</span> &amp;a;<br>&#125;                   <span class="hljs-comment">// 变量a和c的作用域结束</span><br></code></pre></td></tr></table></figure>
+<p>这段代码虽然可以编译通过，但是其实非常糟糕，变量 <code>a</code> 和 <code>c</code> 都是局部变量，函数结束后将局部变量 <code>a</code> 的地址返回，但局部变量 <code>a</code> 存在栈中，在离开作用域后，<code>a</code> 所申请的栈上内存都会被系统回收，从而造成了 <code>悬空指针(Dangling Pointer)</code> 的问题。这是一个非常典型的内存安全问题，虽然编译可以通过，但是运行的时候会出现错误, 很多编程语言都存在。</p>
+<p>再来看变量 <code>c</code>，<code>c</code> 的值是常量字符串，存储于常量区，可能这个函数我们只调用了一次，也可能我们不再会使用这个字符串，但 <code>&quot;xyz&quot;</code> 只有当整个程序结束后系统才能回收这片内存。</p>
+<blockquote>
+<p>笔者看着真是相当亲切啊（x, 在原文中接下来介绍了一大段堆栈, 但是笔者是做 pwn 的, 不多写了…</p>
+</blockquote>
+<h5 id="所有权规则">所有权规则</h5>
+<p>接下来是有关所有权的<strong>规则</strong>:</p>
+<ul>
+<li>Rust 中每一个值都被一个变量所拥有，该变量被称为值的所有者</li>
+<li>一个值同时只能被一个变量所拥有，或者说一个值只能拥有一个所有者</li>
+<li>当所有者(变量)离开作用域范围时，这个值将被丢弃(drop)</li>
+</ul>
+<p>作用域这一概念在 rust 中和别的语言看上去区别不大, 不多赘述.</p>
+<p>这里还介绍了 <code>String</code> 这个类型, 这个类型是动态分配的字符串, 和诸如 ‘otto’ 这种字符串字面值不一样, 字面值即类型为 <code>&amp;str</code> 的变量, 是不可变的, 而动态分配的一个目的就是为了可变.</p>
+<h4 id="所有权操作">所有权操作</h4>
+<p>先来看一段代码：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = <span class="hljs-number">5</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">y</span> = x;<br></code></pre></td></tr></table></figure>
+<p>这段代码的操作涉及到的值是整型, 是存在栈上的, 在变量绑定时只需要值 copy 即可, 不需要所有权的转移.</p>
+<p>但是如果涉及到了诸如 <code>String</code> 这种动态的, 存在堆上的类型, 就无法做到像上面那样的简单的值 copy . 在 rust 中, 这个复杂类型的存储是分为 ‘栈上的地址指针 (指向堆) + 长度 + 容量, 即类型本身’ 和 ‘堆上的真实数据’ 两者.</p>
+<blockquote>
+<p>实际上这个类型只是三个指针的组合, 这里是清晰概念的说法（</p>
+</blockquote>
+<p>例如:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-meta">#![allow(unused)]</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>	<span class="hljs-keyword">let</span> <span class="hljs-variable">s1</span> = <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;hello&quot;</span>);<br>	<span class="hljs-keyword">let</span> <span class="hljs-variable">s2</span> = s1;<br><br>	<span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;, world!&quot;</span>, s1);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里如果为了性能考虑的话, 是不会采用值 copy 的形式将这一堆东西全都 copy 到 s2 的, 而是只 copy 了 <code>String</code> 类型的三个指针, 但是这样会不符合所有权规则, 堆上的那些数据就有了 s1 和 s2 两个所有者.</p>
+<p>如果一个值拥有 2 个所有者, 那这种情况就和 heap overlapping 无限类似了, 这时候如果离开作用域就无异于 <code>double free</code> . 于是 rust 选择在 s1 赋予 s2 后马上 drop 掉 s1 , 此时 s1 失效, 所有权转移到 s2 .</p>
+<blockquote>
+<p>看上去感觉类似于指针这一概念的转移, 只不过用所有权这一概念感觉更有针对性, 强调一个变量是否存在动态分配要素.</p>
+</blockquote>
+<h4 id="引用-借用">引用/借用</h4>
+<p>引用和 c 的引用没什么区别, 一样是 <code> let a = &amp;b</code> 的形式, 也要解引用使用.</p>
+<p>同时在 rust 中, 引用也可以使用关键字 <code>ref</code> .</p>
+<p>引用在默认情况下是不可变的, 如果想要使用可变引用需要在声明的时候就加入 <code>mut</code> , 同时引用的那个变量也需要是可变的, 可变引用是不可以引用不可变变量的.</p>
+<p>同一作用域下, 特定的一个变量只能有一个可变引用:</p>
+<p>这种限制的好处就是使 Rust 在编译期就避免数据竞争，数据竞争可由以下行为造成：</p>
+<ul>
+<li>两个或更多的指针同时访问同一数据</li>
+<li>至少有一个指针被用来写入数据</li>
+<li>没有同步数据访问的机制</li>
+</ul>
+<p>数据竞争会导致未定义行为，这种行为很可能超出我们的预期，难以在运行时追踪，并且难以诊断和修复。而 Rust 避免了这种情况的发生，因为它甚至不会编译存在数据竞争的代码！</p>
+<p>很多时候可以通过加大括号的方式限制变量的作用域以至于防止这个问题, 默认情况下, 引用的作用域持续到最后一次使用 (大概是这个样子) , 同时, (大概是) 同一变量的作用域下不能同时出现一个可变引用和不可变引用.</p>
+<p>这里 rust 编译器还有一点优化, 对于这种编译器优化行为，Rust 专门起了一个名字 —— <strong>Non-Lexical Lifetimes(NLL)</strong>，专门用于找到某个引用在作用域(<code>&#125;</code>)结束前就不再被使用的代码位置。</p>
+<p>总的来说，借用规则如下：</p>
+<ul>
+<li>同一时刻, 你只能拥有要么一个可变引用, 要么任意多个不可变引用</li>
+<li>引用必须总是有效的.</li>
+</ul>
+<p>这里原文还写出了 dangling 引用的概念, 由于 rust 编译器会处理这种潜在的 uaf , 所以不多赘述.</p>
+<h3 id="0x05-复合类型">0x05 复合类型</h3>
+<h4 id="字符串">字符串</h4>
+<h5 id="切片">切片</h5>
+<p>大概和其他语言的切片没什么区别, rust 中的切片是对集合的一个引用, 大概语法是 <code>&amp;xx[x..x]</code>, 在字符串这里, 切片就是对字符串一部分的引用.</p>
+<p>在切片这里的索引应该是按照字节的形式来的.</p>
+<h5 id="字符串-v2">字符串</h5>
+<p>顾名思义，字符串是由字符组成的连续集合，但是在上一节中我们提到过，<strong>Rust 中的字符是 Unicode 类型，因此每个字符占据 4 个字节内存空间，但是在字符串中不一样，字符串是 UTF-8 编码，也就是字符串中的字符所占的字节数是变化的(1 - 4)</strong>，这样有助于大幅降低字符串所占用的内存空间。</p>
+<p>Rust 在语言级别，只有一种字符串类型： <code>str</code>，它通常是以引用类型出现 <code>&amp;str</code>，也就是上文提到的字符串切片。虽然语言级别只有上述的 <code>str</code> 类型，但是在标准库里，还有多种不同用途的字符串类型，其中使用最广的即是 <code>String</code> 类型。</p>
+<p><code>str</code> 类型是硬编码进可执行文件，也无法被修改，但是 <code>String</code> 则是一个可增长、可改变且具有所有权的 UTF-8 编码字符串，<strong>当 Rust 用户提到字符串时，往往指的就是 <code>String</code> 类型和 <code>&amp;str</code> 字符串切片类型，这两个类型都是 UTF-8 编码</strong>。</p>
+<p>除了 <code>String</code> 类型的字符串，Rust 的标准库还提供了其他类型的字符串，例如 <code>OsString</code>， <code>OsStr</code>， <code>CsString</code> 和 <code>CsStr</code> 等，注意到这些名字都以 <code>String</code> 或者 <code>Str</code> 结尾了吗？它们分别对应的是具有所有权和被借用的变量。</p>
+<h4 id="元组">元组</h4>
+<p>元组是一个可以包含各种类型值的组合。元组使用括号 <code>()</code> 来构造（construct），而每个元组自身又是一个类型标记为 <code>(T1, T2, ...)</code> 的值，其中 <code>T1</code>、<code>T2</code> 是每个元素的类型。函数可以使用元组来返回多个值，因为元组可以拥有任意多个值。</p>
+<h4 id="数组">数组</h4>
+<p>数组就 <code>a : [类型; size]</code></p>
+<h4 id="结构体">结构体</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Person</span> &#123;<br>    name: <span class="hljs-type">String</span>,<br>    age: <span class="hljs-type">u8</span>,<br>&#125;<br><br><span class="hljs-comment">// 单元结构体</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Unit</span>;<br><br><span class="hljs-comment">// 元组结构体</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Pair</span>(<span class="hljs-type">i32</span>, <span class="hljs-type">f32</span>);<br><br><span class="hljs-comment">// 带有两个字段的结构体</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Point</span> &#123;<br>    x: <span class="hljs-type">f32</span>,<br>    y: <span class="hljs-type">f32</span>,<br>&#125;<br><br><span class="hljs-comment">// 结构体可以作为另一个结构体的字段</span><br><span class="hljs-meta">#[allow(dead_code)]</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Rectangle</span> &#123;<br>    <span class="hljs-comment">// 可以在空间中给定左上角和右下角在空间中的位置来指定矩形。</span><br>    top_left: Point,<br>    bottom_right: Point,<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="枚举">枚举</h4>
+<p><code>enum</code> 关键字允许创建一个从数个不同取值中选其一的枚举类型（enumeration）。任何一个在 <code>struct</code> 中合法的取值在 <code>enum</code> 中也合法。</p>
+<p>相较于结构体来说, 枚举可以不是同一个类型</p>
+<hr>
+<blockquote>
+<p>从这里开始属于一个抓进度的状态, 速学了, 不写太多了（</p>
+</blockquote>
+<h4 id="Others-v2">Others</h4>
+<p>这里应该是一些琐碎的东西.</p>
+<h5 id="Option-Some">Option/Some</h5>
+<p>在 Rust 中，<code>Option</code> 是一个枚举类型，用于表示一个值可能存在或不存在的情况。它有两个变体：</p>
+<ol>
+<li><code>Some(T)</code>：表示一个值存在，其中 <code>T</code> 是值的类型。</li>
+<li><code>None</code>：表示值不存在。</li>
+</ol>
+<h3 id="0x06-类型转换">0x06 类型转换</h3>
+<p>Rust 使用 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/rust-by-example/trait.html">trait</a> 解决类型之间的转换问题。最一般的转换会用到 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/convert/trait.From.html"><code>From</code></a> 和 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/convert/trait.Into.html"><code>Into</code></a> 两个 trait。</p>
+<h4 id="From-Into">From / Into</h4>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::convert::<span class="hljs-built_in">From</span>;<br><br><span class="hljs-meta">#[derive(Debug)]</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Number</span> &#123;<br>    value: <span class="hljs-type">i32</span>,<br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">From</span>&lt;<span class="hljs-type">i32</span>&gt; <span class="hljs-keyword">for</span> <span class="hljs-title class_">Number</span> &#123;<br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">from</span>(item: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> &#123;<br>        Number &#123; value: item &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">num</span> = Number::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-number">30</span>);<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;My number is &#123;:?&#125;&quot;</span>, num);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>两者用法如上, 大体基本相同, 只不过在用 Into 的时候要在绑定的时候指定类型:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">int</span> = <span class="hljs-number">5</span>;<br>    <span class="hljs-comment">// 试试删除类型说明</span><br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">num</span>: Number = int.<span class="hljs-title function_ invoke__">into</span>();<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;My number is &#123;:?&#125;&quot;</span>, num);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>类似于 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/rust-by-example/conversion/from_into.html"><code>From</code> 和 <code>Into</code></a>，<a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/convert/trait.TryFrom.html"><code>TryFrom</code></a> 和 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/convert/trait.TryInto.html"><code>TryInto</code></a> 是类型转换的通用 trait。不同于 <code>From</code>/<code>Into</code> 的是，<code>TryFrom</code> 和 <code>TryInto</code> trait 用于易出错的转换，也正因如此，其返回值是 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/result/enum.Result.html"><code>Result</code></a> 型。</p>
+<p>要把任何类型转换成 <code>String</code>，只需要实现那个类型的 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/string/trait.ToString.html"><code>ToString</code></a> trait。然而不要直接这么做，您应该实现<a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/fmt/trait.Display.html"><code>fmt::Display</code></a> trait，它会自动提供 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/string/trait.ToString.html"><code>ToString</code></a>.</p>
+<blockquote>
+<p>rust-by-example 前面一段对 trait 的描写真多啊（</p>
+</blockquote>
+<p>我们经常需要把字符串转成数字。完成这项工作的标准手段是用 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/primitive.str.html#method.parse"><code>parse</code></a> 函数, 这里需要提供类型, 方法是提供标注或 <code>parse::&lt;xx&gt;()</code> .</p>
+<p>多在这里写一个 str 到 String 的转换:</p>
+<ul>
+<li><code>String::from(&quot;hello,world&quot;)</code></li>
+<li><code>&quot;hello,world&quot;.to_string()</code></li>
+</ul>
+<h3 id="0x07-流程控制">0x07 流程控制</h3>
+<h4 id="if-else">if else</h4>
+<p><code>if</code>-<code>else</code> 分支判断和其他语言类似。不同的是，Rust 语言中的布尔判断条件不必使用小括号包裹，且每个条件后面都跟着一个代码块。<code>if</code>-<code>else</code> 条件选择是一个表达式，并且所有分支都必须返回相同的类型。</p>
+<h4 id="无限循环-loop">无限循环 (loop)</h4>
+<p>使用 loop 构建一个无限循环, 可以通过 break 直接退出循环, 或是 continue 继续下一次.</p>
+<h5 id="嵌套处理">嵌套处理</h5>
+<p>在处理嵌套循环的时候可以 <code>break</code> 或 <code>continue</code> 外层循环。在这类情形中，循环必须用一些 <code>'label</code>（标签）来注明，并且标签必须传递给 <code>break</code>/<code>continue</code> 语句. 如下:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-symbol">&#x27;outer</span>: <span class="hljs-keyword">loop</span> &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Entered the outer loop&quot;</span>);<br><br>        <span class="hljs-symbol">&#x27;inner</span>: <span class="hljs-keyword">loop</span> &#123;<br>            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Entered the inner loop&quot;</span>);<br><br>            <span class="hljs-comment">// 这只是中断内部的循环</span><br>            <span class="hljs-comment">//break;</span><br><br>            <span class="hljs-comment">// 这会中断外层循环</span><br>            <span class="hljs-keyword">break</span> <span class="hljs-symbol">&#x27;outer</span>;<br>        &#125;<br><br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;This point will never be reached&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Exited the outer loop&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>loop</code> 有个用途是尝试一个操作直到成功为止。若操作返回一个值，则可能需要将其传递给代码的其余部分：将该值放在 <code>break</code> 之后，它就会被 <code>loop</code> 表达式返回。</p>
+<h4 id="WHile">WHile</h4>
+<p><code>while</code> 关键字可以用作当型循环（当条件满足时循环）, 用法类似, 不多写.</p>
+<h4 id="For">For</h4>
+<p><code>for in</code> 结构可以遍历一个 <code>Iterator</code>（迭代器）。创建迭代器的一个最简单的方法是使用区间标记 <code>a..b</code>。这会生成从 <code>a</code>（包含此值） 到 <code>b</code>（不含此值）的，步长为 1 的一系列值。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">for</span> <span class="hljs-variable">n</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;a&#x27;</span>..<span class="hljs-string">&#x27;q&#x27;</span> &#123;<br>        <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;c&#x27;</span> &#123;<br>            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;otto&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;0770&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>for in</code> 结构能以几种方式与 <code>Iterator</code> 互动。在 <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/rust-by-example/trait/iter.html">迭代器</a> trait 一节将会谈到，<strong>如果没有特别指定，<code>for</code> 循环会对给出的集合应用 <code>into_iter</code> 函数</strong>，把它转换成一个迭代器。这并不是把集合变成迭代器的唯一方法，其他的方法有 <code>iter</code> 和<code>iter_mut</code> 函数。</p>
+<p>这三个函数会以不同的方式返回集合中的数据。</p>
+<ul>
+<li><code>iter</code> - 在每次迭代中借用集合中的一个元素。这样集合本身不会被改变，循环之后仍可以使用。</li>
+<li><code>into_iter</code> - 会消耗集合。在每次迭代中，集合中的数据本身会被提供。一旦集合被消耗了，之后就无法再使用了，因为它已经在循环中被 “移除”（move）了。</li>
+<li><code>iter_mut</code> - 可变地（mutably）借用集合中的每个元素，从而允许集合被就地修改。</li>
+</ul>
+<h4 id="match-匹配机制">match 匹配机制</h4>
+<p>Rust 通过 <code>match</code> 关键字来提供模式匹配，和 C 语言的 <code>switch</code> 用法类似。第一个匹配分支会被比对，并且所有可能的值都必须被覆盖, 这个机制也可以用于解构一些复杂类型变量, 诸如一个元组我只需要 match 第一个元素, 然后对后续元素进行操作的这种情况.</p>
+<p>由于在这里需要覆盖所有可能的值, 所以有的时候可能某些语句会比较多余, 这时候 rust 也提供了 <code>if let</code> 和 <code>while let</code> 机制,</p>
+<h3 id="0x08-有关函数">0x08 有关函数</h3>
+<h4 id="方法">方法</h4>
+<p>方法（method）是依附于对象的函数。这些方法通过关键字 <code>self</code> 来访问对象中的数据和其他。方法在 <code>impl</code> 代码块中定义。</p>
+<h4 id="闭包">闭包</h4>
+<p>Rust 中的闭包（closure），也叫做 lambda 表达式或者 lambda，是一类能够捕获周围作用域中变量的函数。例如，一个可以捕获 x 变量的闭包如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Rust">|val| val + x<br></code></pre></td></tr></table></figure>
+<p>它们的语法和能力使它们在临时（on the fly）使用时相当方便。调用一个闭包和调用一个函数完全相同，不过调用闭包时，输入和返回类型两者都<strong>可以</strong>自动推导，而输入变量名<strong>必须</strong>指明。</p>
+<p>其他的特点包括：</p>
+<ul>
+<li>声明时使用 <code>||</code> 替代 <code>()</code> 将输入参数括起来。</li>
+<li>函数体定界符（<code>&#123;&#125;</code>）对于单个表达式是可选的，其他情况必须加上。</li>
+<li>有能力捕获外部环境的变量。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OS/" class="category-chain-item">OS</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/OS/Rust/" class="category-chain-item">Rust</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Rusttt</div>
+      <div>http://example.com/2024/04/19/Rusttt/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Luo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 19, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 19, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/04/19/Rustlings/" title="Rustlings">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Rustlings</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/08/2024diary/" title="2024diary">
+                        <span class="hidden-mobile">2024diary</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://cdn.staticfile.org/waline/2.15.5/waline.min.css')
+      Fluid.utils.createScript('https://cdn.staticfile.org/waline/2.15.5/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://pl-c579209fn-zangetsu486s-projects.vercel.app/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Read: 
+        <span id="busuanzi_value_site_pv"></span>
+         
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Reader: 
+        <span id="busuanzi_value_site_uv"></span>
+         
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
